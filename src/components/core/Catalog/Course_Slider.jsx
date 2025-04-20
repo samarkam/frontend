@@ -31,10 +31,11 @@ function Course_Slider({ Courses }) {
           className="max-h-[30rem] pt-8 px-2"
         >
           {Courses?.map((course, i) => (
+              course.active && course.published &&  (
             <SwiperSlide key={i}>
               <Course_Card course={course} Height={"h-[250px]"} />
             </SwiperSlide>
-          ))}
+          )))}
         </Swiper>
       ) : (
         <div className="flex flex-col sm:flex-row gap-6 ">

@@ -4,7 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useDispatch, useSelector } from "react-redux"
 
 import IconBtn from "../../../common/IconBtn"
-import { updateProfile } from "../../../../services/operations/SettingsAPI"
+import { updateProfileEtudiant } from "../../../../services/operations/SettingsAPI"
 import { useNavigate } from "react-router-dom"
 
 export default function UpdatePassword() {
@@ -26,7 +26,7 @@ export default function UpdatePassword() {
 
   const submitPasswordForm = async (data) => {
    // console.log("password Data - ", data)
-      dispatch(updateProfile(user, data,navigate))
+      dispatch(updateProfileEtudiant(user, data,navigate))
    
   }
 

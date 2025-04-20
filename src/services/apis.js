@@ -66,14 +66,10 @@ export const contactusEndpoint = {
   CONTACT_US_API: BASE_URL + "/reach/contact",
 }
 
-// SETTINGS PAGE API
-// export const settingsEndpoints = {
-//   UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/updateUserProfileImage",
-//   UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile",
-//   CHANGE_PASSWORD_API: BASE_URL + "/auth/changepassword",
-//   DELETE_PROFILE_API: BASE_URL + "/profile/deleteProfile",
-// }
+
 
 export const etudiantAPI = {
-  UPDATE_PROFILE_API: BASE_URL + "/etudiant/update",
+  UPDATE_PROFILE_API_ETUDIANT: BASE_URL + "/etudiant/update",
+  UPDATE_PROFILE_API_ENSEIGNANT: BASE_URL + "/enseignant/update",
+  UPDATE_PROFILE_API_ADMIN: BASE_URL + "/admin/update",
 }

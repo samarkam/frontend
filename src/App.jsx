@@ -145,6 +145,8 @@ function App() {
           <Route path="dashboard/Settings" element={<Settings />} />
 
           {/* Route only for Students */}
+
+          
           {/* cart , EnrolledCourses */}
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
@@ -155,7 +157,6 @@ function App() {
 
           {/* Route only for Instructors */}
           {/* add course , MyCourses, EditCourse*/}
-          {console.log("------------------------>"+user?.accountType)}
           {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
             <>
               <Route path="dashboard/instructor" element={<Instructor />} />

@@ -2,8 +2,9 @@ import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
-import { updateProfile } from "../../../../services/operations/SettingsAPI"
+import { updateProfileEtudiant, updateProfileAdmin , updateProfileEnseignant } from "../../../../services/operations/SettingsAPI"
 import IconBtn from "../../../common/IconBtn"
+import { ACCOUNT_TYPE } from "../../../../utils/constants"
 
 
 export default function EditProfile() {
@@ -14,9 +15,20 @@ export default function EditProfile() {
   const { register, handleSubmit, formState: { errors } } = useForm()
 
   const submitProfileForm = async (data) => {
-    //// console.log("Form Data - ", data)
+    //  console.log("submitProfileForm" )
+    //  console.log(user?.accountType )
     try {
-      dispatch(updateProfile(user, data,navigate))
+       if(user?.accountType === ACCOUNT_TYPE.STUDENT){
+        dispatch(updateProfileEtudiant(user, data,navigate))
+      
+          }else if (user?.accountType === ACCOUNT_TYPE.INSTRUCTOR){
+            dispatch(updateProfileEnseignant(user, data,navigate))
+      
+      
+          }else if (user?.accountType === ACCOUNT_TYPE.ADMIN){
+            dispatch(updateProfileAdmin(user, data,navigate))
+      
+          }
     } catch (error) {
      // console.log("ERROR MESSAGE - ", error.message)
     }
@@ -49,7 +61,7 @@ export default function EditProfile() {
                 id="prenom"
                 placeholder="Enter first name"
                 className="form-style"
-                {...register("firstName", { required: true })}
+                {...register("prenom", { required: true })}
                 defaultValue={user?.prenom}
               />
               {errors.prenom && (
@@ -113,12 +125,42 @@ export default function EditProfile() {
                 </span>
               )}
             </div>
+          {user.matricule && (
+             <div className="flex flex-col gap-2 lg:w-[48%]">
+             <label htmlFor="matricule" className="lable-style">
+             Registration number
+             </label>
+             <input
+                 type="text"
+                 name="matricule"
+                 id="matricule"
+                 className="form-style"
+                 {...register("matricule", {
+                   required: {
+                     value: true,
+                     message: "Please enter your registration number.",
+                   },
+                  
+                 })}
+                 defaultValue={
+                   user?.matricule
+                     ? user.matricule
+                     : ""
+                 }
+               />
 
+             {errors.matricule && (
+               <span className="-mt-1 text-[12px] text-yellow-100">
+                 {errors.matricule.message}
+               </span>
+             )}
+           </div>
+          )}
            
           </div>
 
           <div className="flex flex-col gap-5 lg:flex-row">
-          <div className="flex flex-col gap-2 w-1/2">
+          <div className="flex flex-col gap-2 lg:w-[48%]">
             <label htmlFor="telephone" className="lable-style">
                 Contact Number
               </label>
@@ -144,9 +186,9 @@ export default function EditProfile() {
                 </span>
               )}
             </div>
-          { user?.niveauEtude ? 
+          { user?.niveauEtude &&
             
-            <div className="flex flex-col gap-2 w-1/2">
+            (<div className="flex flex-col gap-2 lg:w-[48%]">
             <label htmlFor="niveauEtude" className="lable-style">
               niveau Etude
               </label>
@@ -164,10 +206,45 @@ export default function EditProfile() {
                   Please enter your Grade.
                 </span>
               )}
-            </div> : <div></div>}
+            </div> )
+            }
+
+            {user.specialite && (
+             <div className="flex flex-col gap-2 lg:w-[48%]">
+             <label htmlFor="specialite" className="lable-style">
+             Speciality
+             </label>
+             <input
+                 type="text"
+                 name="specialite"
+                 id="specialite"
+                 className="form-style"
+                 {...register("specialite", {
+                   required: {
+                     value: true,
+                     message: "Please enter your speciality.",
+                   },
+                  
+                 })}
+                 defaultValue={
+                   user?.specialite
+                     ? user.specialite
+                     : ""
+                 }
+               />
+
+             {errors.specialite && (
+               <span className="-mt-1 text-[12px] text-yellow-100">
+                 {errors.specialite.message}
+               </span>
+             )}
+           </div>
+          )}
 
             </div>
-            <div className="flex flex-col gap-5 lg:flex-row">
+           {user?.details &&
+           (
+             <div className="flex flex-col gap-5 lg:flex-row">
 
             <div className="flex flex-col gap-2 w-full">
               <label htmlFor="details" className="lable-style">
@@ -188,7 +265,7 @@ export default function EditProfile() {
                 </span>
               )}
             </div>
-          </div>
+          </div>)}
         </div>
 
         <div className="flex justify-end gap-2">

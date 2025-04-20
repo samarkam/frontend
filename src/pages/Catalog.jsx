@@ -64,13 +64,23 @@ function Catalog() {
     return (
         <>
             {/* Hero Section */}
-            <div className=" box-content bg-richblack-800 px-4">
-                <div className="mx-auto flex min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent ">
+            <div className="box-content bg-richblack-800 px-4">
+                <div className="mx-auto flex min-h-[200px] max-w-maxContentTab flex-col lg:flex-row lg:items-start lg:justify-start lg:gap-10 lg:max-w-maxContent py-6">
+
+                    {catalogPageData?.image && (
+                    <div className="lg:w-[180px] flex justify-start">
+                        <img
+                        src={catalogPageData.image}
+                        alt="Category"
+                        className="w-[160px] h-auto rounded-lg"
+                        />
+                    </div>
+                    )}
+
+                    <div className="flex flex-col gap-4 mt-4 lg:mt-0">
                     <p className="text-sm text-richblack-300">
                         {`Home / Catalog / `}
-                        <span className="text-yellow-25">
-                            {catalogPageData?.labelle}
-                        </span>
+                        <span className="text-yellow-25">{catalogPageData?.labelle}</span>
                     </p>
                     <p className="text-3xl text-richblack-5">
                         {catalogPageData?.dicipline?.titre}
@@ -78,17 +88,12 @@ function Catalog() {
                     <p className="max-w-[870px] text-richblack-200">
                         {catalogPageData?.dicipline?.description}
                     </p>
-                    {catalogPageData?.image && (
-                        <div className="flex justify-center">
-                            <img
-                            src={catalogPageData.image}
-                            alt="Category"
-                            className="w-full max-w-[400px] rounded-lg"
-                            />
-                        </div>
-                        )}
+                    </div>
+
                 </div>
             </div>
+
+
 
             {/* Section 1 */}
             <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
