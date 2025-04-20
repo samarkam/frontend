@@ -6,8 +6,8 @@ import { catalogData } from '../apis';
 
 // ================ get Catalog Page Data  ================
 export const getCatalogPageData = async (categoryId) => {
-  console.log("ttttttttttttttttttttttttttttttt")
-  console.log(categoryId)
+ // console.log("ttttttttttttttttttttttttttttttt")
+ // console.log(categoryId)
   // const toastId = toast.loading("Loading...");
   let result = [];
   try {
@@ -17,11 +17,11 @@ export const getCatalogPageData = async (categoryId) => {
       throw new Error("Could not Fetch Category page data");
 
     result = response?.data;
-    console.log("CATALOG PAGE DATA API RESPONSE ............/" + categoryId, response.data )
+   // console.log("CATALOG PAGE DATA API RESPONSE ............/" + categoryId, response.data )
 
   }
   catch (error) {
-    console.log("CATALOG PAGE DATA API ERROR....", error);
+   // console.log("CATALOG PAGE DATA API ERROR....", error);
     // toast.error(error.response?.data.message);
     result = error.response?.data.data;
   }

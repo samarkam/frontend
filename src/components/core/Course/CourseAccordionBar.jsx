@@ -1,44 +1,32 @@
 import { useEffect, useRef, useState } from "react"
 import CourseSubSectionAccordion from "./CourseSubSectionAccordion"
-
 import { IoMdArrowDropdown } from "react-icons/io"
 
-
-export default function CourseAccordionBar({ course, isActive, handleActive }) {
-
+export default function CourseAccordionBar({ course }) {
   const contentEl = useRef(null)
-  const [active, setActive] = useState(false)  // Accordian state
+  const [active, setActive] = useState(false)
   const [sectionHeight, setSectionHeight] = useState(0)
-
-  useEffect(() => {
-    setActive(isActive?.includes(course.id))
-  }, [isActive])
-
 
   useEffect(() => {
     setSectionHeight(active ? contentEl.current.scrollHeight : 0)
   }, [active])
 
-
-
   return (
-    <div className='overflow-hidden border border-solid border-richblack-600 bg-richblack-700 hover:bg-richblack-600 text-richblack-5 last:mb-0 duration-200 '>
+    <div className='overflow-hidden border border-solid border-richblack-600 bg-richblack-700 hover:bg-richblack-600 text-richblack-5 last:mb-0 duration-200'>
       <div>
         <div
-          className={`flex cursor-pointer items-start justify-between bg-opacity-20 px-7 py-6 transition-[0.3s]`}
-          onClick={() => { handleActive(course.id) }}
+          className="flex cursor-pointer items-start justify-between bg-opacity-20 px-7 py-6 transition-[0.3s]"
+          onClick={() => setActive(!active)}
         >
           <div className="flex items-center gap-2">
-            <i
-              className={isActive.includes(course.id) ? "rotate-180 duration-300" : "rotate-0 duration-300"}
-            >
+            <i className={active ? "rotate-180 duration-300" : "rotate-0 duration-300"}>
               <IoMdArrowDropdown size={25} />
             </i>
-            <p>{course?.sectionName}</p>
+            <p>{course?.titre}</p>
           </div>
           <div className="space-x-4">
             <span className="text-yellow-25">
-              {`${course?.chapitres?.length || 0} lecture(s)`}
+              {`${course?.resourceList?.length || 0} resource(s)`}
             </span>
           </div>
         </div>
@@ -46,13 +34,13 @@ export default function CourseAccordionBar({ course, isActive, handleActive }) {
 
       <div
         ref={contentEl}
-        className={`relative h-0 overflow-hidden bg-richblack-900 transition-[height] duration-[0.35s] ease-[ease]`}
-        style={{ height: sectionHeight, }}
+        className="relative h-0 overflow-hidden bg-richblack-900 transition-[height] duration-[0.35s] ease-[ease]"
+        style={{ height: sectionHeight }}
       >
         <div className="text-textHead flex flex-col gap-2 px-7 py-6 font-semibold">
-          {course?.subSection?.map((subSec, i) => {
-            return <CourseSubSectionAccordion subSec={subSec} key={i} />
-          })}
+          {course?.resourceList?.map((resource, i) => (
+            <CourseSubSectionAccordion subSec={resource} key={i} />
+          ))}
         </div>
       </div>
     </div>

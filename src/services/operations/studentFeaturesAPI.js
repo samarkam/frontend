@@ -41,20 +41,20 @@
 //         //     {
 //         //         Authorization: `Bearer ${token}`,
 //         //     })
-//         // console.log("orderResponse... ", orderResponse);
+//         //// console.log("orderResponse... ", orderResponse);
 //         // if (!orderResponse.data.success) {
 //         //     throw new Error(orderResponse.data.message);
 //         // }
 
 //         // const RAZORPAY_KEY = import.meta.env.VITE_APP_RAZORPAY_KEY;
-//         // console.log("RAZORPAY_KEY...", RAZORPAY_KEY);
+//         //// console.log("RAZORPAY_KEY...", RAZORPAY_KEY);
 
 //         // options
 //         // const options = {
 //         //     key: RAZORPAY_KEY,
 //         //     currency: null, //orderResponse.data.message.currency,
 //         //     amount: null, //orderResponse.data.message.amount,
-//         //     order_id: null,//orderResponse.data.message.id,
+//         //     orderid: null,//orderResponse.data.message.id,
 //         //     name: "StudyNotion",
 //         //     description: "Thank You for Purchasing the Course",
 //         //     image: rzpLogo,
@@ -74,12 +74,12 @@
 //         // paymentObject.open();
 //         // paymentObject.on("payment.failed", function (response) {
 //         //     toast.error("oops, payment failed");
-//         //     console.log("payment failed.... ", response.error);
+//         //    // console.log("payment failed.... ", response.error);
 //         // })
 
 //     }
 //     catch (error) {
-//         console.log("PAYMENT API ERROR.....", error);
+//        // console.log("PAYMENT API ERROR.....", error);
 //         toast.error(error.response?.data?.message);
 //         // toast.error("Could not make Payment");
 //     }
@@ -91,15 +91,15 @@
 // async function sendPaymentSuccessEmail(response, amount, token) {
 //     try {
 //         await apiConnector("POST", SEND_PAYMENT_SUCCESS_EMAIL_API, {
-//             orderId: response.razorpay_order_id,
-//             paymentId: response.razorpay_payment_id,
+//             orderId: response.razorpay_orderid,
+//             paymentId: response.razorpay_paymentid,
 //             amount,
 //         }, {
 //             Authorization: `Bearer ${token}`
 //         })
 //     }
 //     catch (error) {
-//         console.log("PAYMENT SUCCESS EMAIL ERROR....", error);
+//        // console.log("PAYMENT SUCCESS EMAIL ERROR....", error);
 //     }
 // }
 
@@ -122,7 +122,7 @@
 //         dispatch(resetCart());
 //     }
 //     catch (error) {
-//         console.log("PAYMENT VERIFY ERROR....", error);
+//        // console.log("PAYMENT VERIFY ERROR....", error);
 //         toast.error("Could not verify Payment");
 //     }
 //     toast.dismiss(toastId);

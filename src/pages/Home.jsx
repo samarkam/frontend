@@ -63,7 +63,7 @@ const Home = () => {
         setBackgroundImg(bg);
     }, [])
 
-    // console.log('bg ==== ', backgroundImg)
+    //// console.log('bg ==== ', backgroundImg)
 
     // get courses data
     const [CatalogPageData, setCatalogPageData] = useState(null);
@@ -75,7 +75,7 @@ const Home = () => {
 
             const result = await getCatalogPageData(categoryID, dispatch);
             setCatalogPageData(result);
-            // console.log("page data ==== ",CatalogPageData);
+            //// console.log("page data ==== ",CatalogPageData);
         }
         if (categoryID) {
             fetchCatalogPageData();
@@ -83,7 +83,7 @@ const Home = () => {
     }, [categoryID])
 
 
-    // console.log('================ CatalogPageData?.selectedCourses ================ ', CatalogPageData)
+    //// console.log('================ CatalogPageData?.selectedCourses ================ ', CatalogPageData)
 
 
     return (

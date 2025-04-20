@@ -17,7 +17,6 @@ import { fetchCourseDetails } from "../services/operations/courseDetailsAPI"
 
 import GetAvgRating from "../utils/avgRating"
 import { ACCOUNT_TYPE } from './../utils/constants';
-import { addToCart } from "../slices/cartSlice"
 
 import { GiReturnArrow } from 'react-icons/gi'
 import { MdOutlineVerified } from 'react-icons/md'
@@ -39,7 +38,7 @@ function CourseDetails() {
 
   // Getting courseId from url parameter
   const { courseId } = useParams()
-  // console.log(`course id: ${courseId}`)
+  //// console.log(`course id: ${courseId}`)
 
   // Declear a state to save the course details
   const [response, setResponse] = useState(null)
@@ -50,35 +49,36 @@ function CourseDetails() {
     const fectchCourseDetailsData = async () => {
       try {
         const res = await fetchCourseDetails(courseId)
-         console.log("course details res: ", res)
+        // console.log("hhhhhhhhhhhhhhhhhhh")
+        // console.log("course details res: ", res)
         setResponse(res)
       } catch (error) {
-        console.log("Could not fetch Course Details")
+       // console.log("Could not fetch Course Details")
       }
     }
     fectchCourseDetailsData();
   }, [courseId])
 
-  // console.log("response: ", response)
+  //// console.log("response: ", response)
 
   // Calculating Avg Review count
   const [avgReviewCount, setAvgReviewCount] = useState(0)
   useEffect(() => {
     setAvgReviewCount(5)
   }, [response])
-  // console.log("avgReviewCount: ", avgReviewCount)
+  //// console.log("avgReviewCount: ", avgReviewCount)
 
   // Collapse all
   // const [collapse, setCollapse] = useState("")
-  const [isActive, setIsActive] = useState(Array(0))
-  const handleActive = (id) => {
-    // console.log("called", id)
-    setIsActive(
-      !isActive.includes(id)
-        ? isActive.concat([id])
-        : isActive.filter((e) => e != id)
-    )
-  }
+  // const [isActive, setIsActive] = useState(Array(0))
+  // const handleActive = (id) => {
+  //   //// console.log("called", id)
+  //   setIsActive(
+  //     !isActive.includes(id)
+  //       ? isActive.concat([id])
+  //       : isActive.filter((e) => e != id)
+  //   )
+  // }
 
   // Total number of lectures
   const [totalNoOfLectures, setTotalNoOfLectures] = useState(0)
@@ -135,25 +135,40 @@ function CourseDetails() {
     specialite
   } = response
 
-  //Buy Course handler
-  const handleBuyCourse = () => {
-    if (user) {
-      const toastId = toast.loading("Loading...");
-       apiConnector("GET",   `http://localhost:9090/api/cours/inscription?etudiantId=${user.id}&coursId=${courseId}`)
-           toast.dismiss(toastId);
 
-      // buyCourse(token, coursesId, user, navigate, dispatch)
-      return
-    }
-    setConfirmationModal({
-      text1: "You are not logged in!",
-      text2: "Please login to Purchase Course.",
-      btn1Text: "Login",
-      btn2Text: "Cancel",
-      btn1Handler: () => navigate("/login"),
-      btn2Handler: () => setConfirmationModal(null),
-    })
-  }
+  // const handleBuyCourse = async () => {
+  //   // if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
+  //   //   toast.error("You are an Instructor. You can't buy a course.")
+  //   //   return
+  //   // }
+  //   if (user) {
+  //     const toastId = toast.loading("Loading...");
+  //     try {
+  //       const res = await apiConnector("GET", `http://localhost:9090/api/cours/inscription?etudiantId=${user.id}&coursId=${courseId}`);
+  //      // console.log("tttttttttttttttttttttttt")
+  //      // console.log(res)
+       
+  //         navigate("/dashboard/enrolled-courses");
+       
+  //     } catch (error) {
+  //       console.error("Enrollment failed", error);
+  //       toast.error("Something went wrong");
+  //     } finally {
+  //       toast.dismiss(toastId);
+  //     }
+  //     return;
+  //   }
+  
+  //   setConfirmationModal({
+  //     text1: "You are not logged in!",
+  //     text2: "Please login to Purchase Course.",
+  //     btn1Text: "Login",
+  //     btn2Text: "Cancel",
+  //     btn1Handler: () => navigate("/login"),
+  //     btn2Handler: () => setConfirmationModal(null),
+  //   });
+  // }
+  
 
   // Add to cart Course handler
   const handleAddToCart = () => {
@@ -220,11 +235,11 @@ function CourseDetails() {
             </div>
 
             {/* will appear only for small size */}
-            <div className="flex w-full flex-col gap-4 border-y border-y-richblack-500 py-4 lg:hidden">
+            {/* <div className="flex w-full flex-col gap-4 border-y border-y-richblack-500 py-4 lg:hidden"> */}
               {/* <p className="space-x-3 pb-4 text-3xl font-semibold text-richblack-5">Rs. {price}</p> */}
-              <button className="yellowButton" onClick={handleBuyCourse}>Buy Now</button>
-              <button onClick={handleAddToCart} className="blackButton">Add to Cart</button>
-            </div>
+              {/* <button className="yellowButton" onClick={handleBuyCourse}>Buy Now</button> */}
+              {/* <button onClick={handleBuyCourse} className="blackButton">Enroll Course</button>
+            </div> */}
           </div>
 
           {/* Floating Courses Card */}
@@ -232,7 +247,6 @@ function CourseDetails() {
             <CourseDetailsCard
               course={response}
               setConfirmationModal={setConfirmationModal}
-              handleBuyCourse={handleBuyCourse}
             />
           </div>
         </div>
@@ -280,14 +294,13 @@ function CourseDetails() {
 
             {/* Course Details Accordion - section Subsection */}
             <div className="py-4 ">
-              {chapitres?.map((course, index) => (
+            {chapitres?.map((course, index) => (
                 <CourseAccordionBar
                   course={course}
                   key={index}
-                  isActive={isActive}
-                  handleActive={handleActive}
                 />
               ))}
+
             </div>
 
             {/* Author Details */}

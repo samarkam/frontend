@@ -25,7 +25,7 @@ export default function UpdatePassword() {
   } = useForm()
 
   const submitPasswordForm = async (data) => {
-    console.log("password Data - ", data)
+   // console.log("password Data - ", data)
       dispatch(updateProfile(user, data,navigate))
    
   }

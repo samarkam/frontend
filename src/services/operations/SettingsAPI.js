@@ -17,7 +17,7 @@ const {
 // ================ update Profile  ================
 export function updateProfile(user, formData,navigate) {
   return async (dispatch) => {
-   console.log('This is formData for updated profile -> ', formData)
+  // console.log('This is formData for updated profile -> ', formData)
     const toastId = toast.loading("Loading...")
     try {
 
@@ -35,7 +35,7 @@ export function updateProfile(user, formData,navigate) {
         niveauEtude: formData.niveauEtude
       };
       const response = await apiConnector("PUT", UPDATE_PROFILE_API, etudiantData)
-      console.log("UPDATE_PROFILE_API API RESPONSE............", response)
+     // console.log("UPDATE_PROFILE_API API RESPONSE............", response)
 
       if (!response.data) {
         throw new Error(response.data.message)
@@ -47,13 +47,13 @@ export function updateProfile(user, formData,navigate) {
       dispatch(setUser(response.data))
 
    
-      // console.log('DATA = ', data)
+      //// console.log('DATA = ', data)
       localStorage.setItem("user", JSON.stringify({ ...response.data.updatedUserDetails, image: userImage }));
       toast.success("Profile Updated Successfully")
       navigate("/dashboard/my-profile");
 
     } catch (error) {
-      console.log("UPDATE_PROFILE_API API ERROR............", error)
+     // console.log("UPDATE_PROFILE_API API ERROR............", error)
       toast.error("Could Not Update Profile")
     }
     toast.dismiss(toastId)
@@ -66,14 +66,14 @@ export async function changePassword(user, formData) {
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData)
-    console.log("CHANGE_PASSWORD_API API RESPONSE............", response)
+   // console.log("CHANGE_PASSWORD_API API RESPONSE............", response)
 
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
     toast.success("Password Changed Successfully")
   } catch (error) {
-    console.log("CHANGE_PASSWORD_API API ERROR............", error)
+   // console.log("CHANGE_PASSWORD_API API ERROR............", error)
     toast.error(error.response.data.message)
   }
   toast.dismiss(toastId)
@@ -87,7 +87,7 @@ export function deleteProfile(token, navigate) {
       const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
         Authorization: `Bearer ${token}`,
       })
-      console.log("DELETE_PROFILE_API API RESPONSE............", response)
+     // console.log("DELETE_PROFILE_API API RESPONSE............", response)
 
       if (!response.data.success) {
         throw new Error(response.data.message)
@@ -95,7 +95,7 @@ export function deleteProfile(token, navigate) {
       toast.success("Profile Deleted Successfully")
       dispatch(logout(navigate))
     } catch (error) {
-      console.log("DELETE_PROFILE_API API ERROR............", error)
+     // console.log("DELETE_PROFILE_API API ERROR............", error)
       toast.error("Could Not Delete Profile")
     }
     toast.dismiss(toastId)

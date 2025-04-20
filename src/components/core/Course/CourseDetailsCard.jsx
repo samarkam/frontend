@@ -7,13 +7,12 @@ import { useNavigate } from "react-router-dom"
 import { BsFillCaretRightFill } from "react-icons/bs"
 import { FaShareSquare } from "react-icons/fa"
 
-import { addToCart } from "../../../slices/cartSlice"
 import { ACCOUNT_TYPE } from "../../../utils/constants"
 import Img from './../../common/Img';
 import { apiConnector } from "../../../services/apiConnector"
 
 
-function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
+function CourseDetailsCard({ course, setConfirmationModal }) {
   const user = useSelector((state) => state.profile.user);
 
   // const { userjson } = localStorage.getItem('user') ? JSON.parse( localStorage.getItem('user')) : null
@@ -38,13 +37,13 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
             `http://localhost:9090/api/cours/my-courses?email=${user.email}`
           );
   
-          console.log("course details res for this user: ", res?.data);
+         // console.log("course details res for this user: ", res?.data);
   
           if (res?.data) {
             const courses = res.data;
             const enrolled = courses.some((c) => c.id === course.id); 
             setEnrolled(enrolled);
-            console.log(" isEnrolled = ", enrolled); 
+           // console.log(" isEnrolled = ", enrolled); 
           }
         } catch (error) {
           console.error(" Could not fetch Course Details", error);
@@ -56,7 +55,39 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
   }, [user, course]);
   
     
-
+  const handleBuyCourse = async() => {
+     if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
+      toast.error("You are an Instructor. You can't buy a course.")
+      return
+    }
+    if (user) {
+      const toastId = toast.loading("Loading...");
+      try {
+        const res = await apiConnector("GET", `http://localhost:9090/api/cours/inscription?etudiantId=${user.id}&coursId=${courseId}`);
+       // console.log("tttttttttttttttttttttttt")
+       // console.log(res)
+       
+          navigate("/dashboard/enrolled-courses");
+       
+      } catch (error) {
+        console.error("Enrollment failed", error);
+        toast.error("Something went wrong");
+      } finally {
+        toast.dismiss(toastId);
+        return;
+      }
+    }
+    setConfirmationModal({
+      text1: "You are not logged in!",
+      text2: "Please login to Purchase Course.",
+      btn1Text: "Login",
+      btn2Text: "Cancel",
+      btn1Handler: () => navigate("/login"),
+      btn2Handler: () => setConfirmationModal(null),
+    })
+    return;
+  }
+  
   const handleShare = () => {
     copy(window.location.href)
     toast.success("Link copied to clipboard")
@@ -81,7 +112,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
     })
   }
 
-  // console.log("Student already enrolled ", course?.studentsEnroled, user?._id)
+  //// console.log("Student already enrolled ", course?.studentsEnroled, user?.id)
 
   return (
     <>
@@ -100,23 +131,18 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
           {course?.titre}
           </div>
           <div className="flex flex-col gap-4">
-            <button
-              className="yellowButton outline-none"
-              onClick={
-                user && isEnrolled
-                  ? () => navigate("/dashboard/enrolled-courses")
-                  : handleBuyCourse
-              }
-            >
-              {user && isEnrolled
-                ? "Go To Course"
-                : "Buy Now"}
-            </button>
-            {(!user || !isEnrolled) && (
-              <button onClick={handleAddToCart} className="blackButton outline-none">
-                Add to Cart
+         { user && isEnrolled ?
+                <button  className="yellowButton outline-none"
+                onClick={
+                    () => navigate("/dashboard/enrolled-courses")
+                    }
+                  >Go To Course</button>
+              
+            :
+              <button onClick={handleBuyCourse} className="blackButton outline-none">
+                Enroll Corse 
               </button>
-            )}
+            }
           </div>
 
       

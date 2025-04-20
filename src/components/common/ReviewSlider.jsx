@@ -39,7 +39,7 @@ function ReviewSlider() {
   }, [])
 
   
-  // console.log('reviews= ', reviews)
+  //// console.log('reviews= ', reviews)
   if(!reviews) return;
 
 

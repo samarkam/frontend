@@ -107,12 +107,14 @@ export default function MyProfile() {
                 {user?.email}
               </p>
             </div>
+           {  user?.niveauEtude ? 
             <div>
               <p className="mb-2 text-sm text-richblack-600">Grade</p>
               <p className="text-sm font-semibold text-richblack-5">
                 {user?.niveauEtude ?? "Add Gender"}
               </p>
             </div>
+            : <div></div>}
           </div>
 
           <div className="flex flex-col gap-y-5">

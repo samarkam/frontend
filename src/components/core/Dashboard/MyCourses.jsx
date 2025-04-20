@@ -11,6 +11,8 @@ import CoursesTable from "./InstructorCourses/CoursesTable"
 
 export default function MyCourses() {
   const { token } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.profile)
+
   const navigate = useNavigate()
   const [courses, setCourses] = useState([])
   const [loading, setLoading] = useState(false)
@@ -18,8 +20,8 @@ export default function MyCourses() {
   useEffect(() => {
     const fetchCourses = async () => {
       setLoading(true);
-      const result = await fetchInstructorCourses(token)
-      // console.log('Instructors all courses  ', result);
+      const result = await fetchInstructorCourses(user)
+      //// console.log('Instructors all courses  ', result);
       setLoading(false);
       if (result) {
         setCourses(result)

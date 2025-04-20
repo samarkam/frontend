@@ -9,7 +9,6 @@ import Img from './../../common/Img';
 
 
 export default function EnrolledCourses() {
-  const { token } = useSelector((state) => state.auth)
   const { user } = useSelector((state) => state.profile)
 
   const navigate = useNavigate()
@@ -21,8 +20,10 @@ export default function EnrolledCourses() {
     try {
       const res = await getUserEnrolledCourses(user);
       setEnrolledCourses(res);
+     // console.log("ttttttttttttttttttttttttttttttttttttttttttttttttttt")
+     // console.log(res)
     } catch (error) {
-      console.log("Could not fetch enrolled courses.", error);
+     // console.log("Could not fetch enrolled courses.", error);
     }
   };
 
@@ -68,8 +69,8 @@ export default function EnrolledCourses() {
         <div className="my-8 text-richblack-5">
           {/* Headings */}
           <div className="flex rounded-t-2xl bg-richblack-800 ">
-            <p className="w-[45%] px-5 py-3">Course Name</p>
-            <p className="w-1/4 px-2 py-3">Duration</p>
+            <p className="w-[38%] px-5 py-3">Course Name</p>
+            <p className="w-1/3 px-2 py-3">description</p>
             <p className="flex-1 px-2 py-3">Progress</p>
           </div>
 
@@ -91,10 +92,10 @@ export default function EnrolledCourses() {
                 key={i}
               >
                 <div
-                  className="flex sm:w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
+                  className="flex sm:w-[38%] cursor-pointer items-center gap-4 px-5 py-3"
                   onClick={() => {
                     navigate(
-                      `/view-course/${course?.id}/section/${course.chapitres?.[0]?.id}/sub-section/${course.chapitres?.[0]?.subSection?.[0]?._id}`
+                      `/view-course/${course?.id}/section/${course.chapitres?.[0]?.id}/sub-section/${course.chapitres?.[0]?.resourceList?.[0]?.id}`
                     )
                   }}
                 >
@@ -105,21 +106,19 @@ export default function EnrolledCourses() {
                   />
 
                   <div className="flex max-w-xs flex-col gap-2">
-                    <p className="font-semibold">{course.name}</p>
-                    <p className="text-xs text-richblack-300">
-                      {course.length > 50
-                        ? `${course.slice(0, 50)}...`
-                        : course.description}
-                    </p>
+                    <p className="font-semibold">{course.titre}</p>
+                   
                   </div>
                 </div>
 
                 {/* only for smaller devices */}
                 {/* duration -  progress */}
                 <div className='sm:hidden'>
-                  <div className=" px-2 py-3">100</div>
+                  <div className=" px-2 py-3">{course.description.length > 50
+                        ? `${course.description.slice(0, 50)}...`
+                        : course.description}</div>
 
-                  <div className="flex sm:w-2/5 flex-col gap-2 px-2 py-3">
+                  <div className="flex sm:w-1/3 flex-col gap-2 px-2 py-3">
                     {/* {console.log('Course ============== ', course.progressPercentage)} */}
 
                     <p>Progress: {course.maxScore || 0}%</p>
@@ -133,8 +132,10 @@ export default function EnrolledCourses() {
 
                 {/* only for larger devices */}
                 {/* duration -  progress */}
-                <div className="hidden w-1/5 sm:flex px-2 py-3">100</div>
-                <div className="hidden sm:flex w-1/5 flex-col gap-2 px-2 py-3">
+                <div className="hidden w-1/3 sm:flex px-2 py-3">{course.description.length > 50
+                        ? `${course.description.slice(0, 50)}...`
+                        : course.description}</div>
+                <div className="hidden sm:flex w-1/4 flex-col gap-2 px-2 py-3">
                   <p>Progress: {course.maxScore || 0}%</p>
                   <ProgressBar
                     completed={course.maxScore || 0}

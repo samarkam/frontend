@@ -37,10 +37,12 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
   useEffect(() => {
     ; (() => {
       if (!courseSectionData.length) return
-      const currentSectionIndx = courseSectionData.findIndex((data) => data._id === sectionId)
-      const currentSubSectionIndx = courseSectionData?.[currentSectionIndx]?.subSection.findIndex((data) => data._id === subSectionId)
-      const activeSubSectionId = courseSectionData[currentSectionIndx]?.subSection?.[currentSubSectionIndx]?._id
-      setActiveStatus(courseSectionData?.[currentSectionIndx]?._id)
+     // console.log("courseSectionData")
+     // console.log(courseSectionData)
+      const currentSectionIndx = courseSectionData.findIndex((data) => data.id === sectionId)
+      const currentSubSectionIndx = courseSectionData?.[currentSectionIndx]?.subSection.findIndex((data) => data.id === subSectionId)
+      const activeSubSectionId = courseSectionData[currentSectionIndx]?.subSection?.[currentSubSectionIndx]?.id
+      setActiveStatus(courseSectionData?.[currentSectionIndx]?.id)
       setVideoBarActive(activeSubSectionId)
     })()
   }, [courseSectionData, courseEntireData, location.pathname])
@@ -81,9 +83,9 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
 
           {/* course Name - total No Of Lectures*/}
           <div className="flex flex-col">
-            <p>{courseEntireData?.courseName}</p>
+            <p>{courseEntireData?.titre}</p>
             <p className="text-sm font-semibold text-richblack-500">
-              {completedLectures?.length} / {totalNoOfLectures}
+              {/* {completedLectures?.length} / {totalNoOfLectures} */}
             </p>
           </div>
         </div>
@@ -94,20 +96,20 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
           {courseSectionData.map((section, index) => (
             <div
               className="mt-2 cursor-pointer text-sm text-richblack-5"
-              onClick={() => setActiveStatus(section?._id)}
+              onClick={() => setActiveStatus(section?.id)}
               key={index}
             >
               {/* Section */}
               <div className="flex justify-between bg-richblack-700 px-5 py-4">
                 <div className="w-[70%] font-semibold">
-                  {section?.sectionName}
+                  {section?.titre}
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-[12px] font-medium">
-                    Lession {section?.subSection.length}
+                    Lession {section?.ordre}
                   </span>
                   <span
-                    className={`${activeStatus === section?._id
+                    className={`${activeStatus === section?.id
                       ? "rotate-0 transition-all duration-500"
                       : "rotate-180"
                       } `}
@@ -118,27 +120,27 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
               </div>
 
               {/* Sub Sections */}
-              {activeStatus === section?._id && (
+              {activeStatus === section?.id && (
                 <div className="transition-[height] duration-500 ease-in-out">
-                  {section.subSection.map((topic, i) => (
+                  {section.resourceList.map((topic, i) => (
                     <div
-                      className={`flex gap-3  px-5 py-2 ${videoBarActive === topic._id
+                      className={`flex gap-3  px-5 py-2 ${videoBarActive === topic.id
                         ? "bg-yellow-200 font-semibold text-richblack-800"
                         : "hover:bg-richblack-900"
                         } `}
                       key={i}
                       onClick={() => {
-                        navigate(`/view-course/${courseEntireData?._id}/section/${section?._id}/sub-section/${topic?._id}`)
-                        setVideoBarActive(topic._id)
+                        navigate(`/view-course/${courseEntireData?.id}/section/${section?.id}/sub-section/${topic?.id}`)
+                        setVideoBarActive(topic.id)
                         courseViewSidebar && window.innerWidth <= 640 ? dispatch(setCourseViewSidebar(false)) : null;
                       }}
                     >
                       <input
                         type="checkbox"
-                        checked={completedLectures.includes(topic?._id)}
+                        checked={completedLectures?.includes(topic?.id)}
                         onChange={() => { }}
                       />
-                      {topic.title}
+                      {topic.titre}
                     </div>
                   ))}
                 </div>

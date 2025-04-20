@@ -1,5 +1,7 @@
+// cartSlice.js
 import { createSlice } from "@reduxjs/toolkit"
 import { toast } from "react-hot-toast"
+import { apiConnector } from "../services/apiConnector"
 
 const initialState = {
   cart: localStorage.getItem("cart")
@@ -17,58 +19,66 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action) => {
-      const course = action.payload
-      const index = state.cart.findIndex((item) => item._id === course._id)
-
-      if (index >= 0) {
-        // If the course is already in the cart, do not modify the quantity
-        toast.error("Course already in cart")
-        return;
-      }
-      // If the course is not in the cart, add it to the cart
-      state.cart.push(course);
-      // Update the total quantity and price
-      state.totalItems++;
-      state.total += course.price;
-      // Update to localstorage
-      localStorage.setItem("cart", JSON.stringify(state.cart));
-      localStorage.setItem("total", JSON.stringify(state.total));
-      localStorage.setItem("totalItems", JSON.stringify(state.totalItems));
-      // show toast
-      toast.success("Course added to cart");
-    },
-
     removeFromCart: (state, action) => {
-      const courseId = action.payload;
-      const index = state.cart.findIndex((item) => item._id === courseId);
+      const courseId = action.payload
+      const index = state.cart.findIndex((item) => item.id === courseId)
 
       if (index >= 0) {
-        // If the course is found in the cart, remove it
-        state.totalItems--;
-        state.total -= state.cart[index].price;
-        state.cart.splice(index, 1);
-        // Update to localstorage
-        localStorage.setItem("cart", JSON.stringify(state.cart));
-        localStorage.setItem("total", JSON.stringify(state.total));
-        localStorage.setItem("totalItems", JSON.stringify(state.totalItems));
-        // show toast
-        toast.success("Course removed from cart");
+        state.totalItems--
+        state.total -= state.cart[index].price
+        state.cart.splice(index, 1)
+        localStorage.setItem("cart", JSON.stringify(state.cart))
+        localStorage.setItem("total", JSON.stringify(state.total))
+        localStorage.setItem("totalItems", JSON.stringify(state.totalItems))
+        toast.success("Course removed from cart")
       }
     },
 
     resetCart: (state) => {
-      state.cart = [];
-      state.total = 0;
-      state.totalItems = 0;
-      // Update to localstorage
-      localStorage.removeItem("cart");
-      localStorage.removeItem("total");
-      localStorage.removeItem("totalItems");
+      state.cart = []
+      state.total = 0
+      state.totalItems = 0
+      localStorage.removeItem("cart")
+      localStorage.removeItem("total")
+      localStorage.removeItem("totalItems")
     },
   },
 })
 
-export const { addToCart, removeFromCart, resetCart } = cartSlice.actions;
+// // ✅ Move this function OUTSIDE createSlice:
+// export const handleBuyCourse = async ({
+//   user,
+//   courseId,
+//   token,
+//   navigate,
+//   dispatch,
+//   setConfirmationModal,
+// }) => {
+//   if (user) {
+//     const toastId = toast.loading("Loading...")
+//     try {
+//       await apiConnector(
+//         "GET",
+//         `http://localhost:9090/api/cours/inscription?etudiantId=${user.id}&coursId=${courseId}`
+//       )
+//       toast.success("Course added to cart")
+//     } catch (err) {
+//       toast.error("Failed to add course")
+//     } finally {
+//       toast.dismiss(toastId)
+//     }
+//   } else {
+//     setConfirmationModal({
+//       text1: "You are not logged in!",
+//       text2: "Please login to Purchase Course.",
+//       btn1Text: "Login",
+//       btn2Text: "Cancel",
+//       btn1Handler: () => navigate("/login"),
+//       btn2Handler: () => setConfirmationModal(null),
+//     })
+//     toast.success("Course added to cart")
+//   }
+// }
 
-export default cartSlice.reducer;
+export const { removeFromCart, resetCart } = cartSlice.actions
+export default cartSlice.reducer

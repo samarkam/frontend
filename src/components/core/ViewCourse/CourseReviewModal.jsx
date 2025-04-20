@@ -30,18 +30,17 @@ export default function CourseReviewModal({ setReviewModal }) {
   }, [])
 
   const ratingChanged = (newRating) => {
-    // console.log(newRating)
+    //// console.log(newRating)
     setValue("courseRating", newRating)
   }
 
   const onSubmit = async (data) => {
     await createRating(
       {
-        courseId: courseEntireData._id,
+        courseId: courseEntireData.id,
         rating: data.courseRating,
         review: data.courseExperience,
-      },
-      token
+      }
     )
     setReviewModal(false)
   }
@@ -62,12 +61,12 @@ export default function CourseReviewModal({ setReviewModal }) {
           <div className="flex items-center justify-center gap-x-4">
             <Img
               src={user?.image}
-              alt={user?.firstName + "profile"}
+              alt={user?.prenom + "profile"}
               className="aspect-square w-[50px] rounded-full object-cover"
             />
             <div className="">
               <p className="font-semibold text-richblack-5 capitalize">
-                {user?.firstName} {user?.lastName}
+                {user?.prenom} {user?.nom}
               </p>
               <p className="text-sm text-richblack-5">Posting Publicly</p>
             </div>

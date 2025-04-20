@@ -30,7 +30,7 @@ import { fetchCourseCategories } from './../../../services/operations/courseDeta
 export default function MobileProfileDropDown() {
     const { user } = useSelector((state) => state.profile)
     if (!user) return null
-    // console.log('user data from store = ', user )
+    //// console.log('user data from store = ', user )
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -50,16 +50,16 @@ export default function MobileProfileDropDown() {
             const res = await fetchCourseCategories();
             // const result = await apiConnector("GET", categories.CATEGORIES_API);
             // const result = await apiConnector('GET', 'http://localhost:4000/api/v1/course/showAllCategories');
-            // console.log("Printing Sublinks result:", result);
+            //// console.log("Printing Sublinks result:", result);
             setSubLinks(res);
         }
         catch (error) {
-            console.log("Could not fetch the category list = ", error);
+           // console.log("Could not fetch the category list = ", error);
         }
         setLoading(false)
     }
 
-    // console.log('data of store  = ', useSelector((state)=> state))
+    //// console.log('data of store  = ', useSelector((state)=> state))
 
 
     useEffect(() => {

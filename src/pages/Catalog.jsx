@@ -28,15 +28,15 @@ function Catalog() {
             try {
                 const res = await fetchCourseCategories();
 
-                console.log(res.filter(
+               // console.log(res.filter(
                     (ct) => ct.id === Number(catalogId)
                 )[0])
-                const category_id = res.filter(
+                const categoryid = res.filter(
                     (ct) => ct.id === Number(catalogId)
                 )[0].id
-                setCategoryId(category_id)
+                setCategoryId(categoryid)
             } catch (error) {
-                console.log("Could not fetch Categories.", error)
+               // console.log("Could not fetch Categories.", error)
             }
         })()
     }, [Number(catalogId)])
@@ -48,19 +48,19 @@ function Catalog() {
                 setLoading(true)
                 try {
                     const res = await getCatalogPageData(categoryId)
-                    console.log("tttttttttt")
-                    console.log(res)
+                   // console.log("tttttttttt")
+                   // console.log(res)
                     setCatalogPageData(res)
                 } catch (error) {
-                    console.log(error)
+                   // console.log(error)
                 }
                 setLoading(false)
             })()
         }
     }, [categoryId])
 
-    // console.log('======================================= ', catalogPageData)
-    // console.log('categoryId ==================================== ', categoryId)
+    //// console.log('======================================= ', catalogPageData)
+    //// console.log('categoryId ==================================== ', categoryId)
 
     if (loading) {
         return (

@@ -38,7 +38,7 @@ function SignupForm() {
       [e.target.name]: e.target.value,
     }));
 
-    // console.log('signup form data - ', formData);
+    //// console.log('signup form data - ', formData);
   };
 
   // Handle Form Submission

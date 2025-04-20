@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react"
-import { AiOutlineDown } from "react-icons/ai"
 import { HiOutlineVideoCamera } from "react-icons/hi"
 
 function CourseSubSectionAccordion({ subSec }) {
@@ -10,7 +9,7 @@ function CourseSubSectionAccordion({ subSec }) {
           <span>
             <HiOutlineVideoCamera />
           </span>
-          <p>{subSec?.title}</p>
+          <p>{subSec?.titre}</p>
         </div>
       </div>
     </div>

@@ -14,11 +14,11 @@ export default function EditProfile() {
   const { register, handleSubmit, formState: { errors } } = useForm()
 
   const submitProfileForm = async (data) => {
-    // console.log("Form Data - ", data)
+    //// console.log("Form Data - ", data)
     try {
       dispatch(updateProfile(user, data,navigate))
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message)
+     // console.log("ERROR MESSAGE - ", error.message)
     }
   }
   return (
