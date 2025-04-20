@@ -47,7 +47,7 @@ const TimelineSection = () => {
                     initial='hidden'
                     whileInView={'show'}
                     viewport={{ once: false, amount: 0.1 }}
-                    className='w-full lg:w-[45%] flex flex-col gap-5'>
+                    className='w-full lg:w-[45%] flex flex-col text-white gap-5'>
                     {
                         timeline.map((element, index) => {
                             return (

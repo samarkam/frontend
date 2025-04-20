@@ -98,7 +98,7 @@ export default function UsersTable({ Users, setUsers, loading, setLoading }) {
 
                 {/* Account Type */}
                 <Td className="w-[25%] text-sm text-richblack-100">
-                  {User.accountType === ACCOUNT_TYPE.INSTRUCTOR ? (
+                  {User?.accountType === ACCOUNT_TYPE.INSTRUCTOR ? (
                     <span className="flex items-center gap-1 rounded-full bg-richblack-700 px-2 py-1 text-xs text-blue-100">
                       Instructor
                     </span>

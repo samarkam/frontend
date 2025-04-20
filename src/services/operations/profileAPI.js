@@ -40,7 +40,7 @@ export function getUserDetails(token, navigate) {
 // ================ get User Enrolled Courses  ================
 export async function   getUserEnrolledCourses(user) {
    
-      if (user && user.accountType === ACCOUNT_TYPE.STUDENT) {
+      if (user && user?.accountType === ACCOUNT_TYPE.STUDENT) {
        // console.log("calling my courses");
   
         try {

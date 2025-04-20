@@ -29,7 +29,7 @@ function CourseDetailsCard({ course, setConfirmationModal }) {
   useEffect(() => {
   
     const fectchCourseDetailsData = async () => {
-      if (user && user.accountType === ACCOUNT_TYPE.STUDENT) {
+      if (user && user?.accountType === ACCOUNT_TYPE.STUDENT) {
   
         try {
           const res = await apiConnector(
@@ -142,8 +142,8 @@ function CourseDetailsCard({ course, setConfirmationModal }) {
                     }
                   >Go To Course</button>
               
-            : user.accountType == ACCOUNT_TYPE.STUDENT ? 
-              <button onClick={handleBuyCourse} className="blackButton outline-none">
+          : user?.accountType == ACCOUNT_TYPE.STUDENT  || !user ?   
+          <button onClick={handleBuyCourse} className="blackButton outline-none">
                 Enroll Corse 
               </button>
             : null

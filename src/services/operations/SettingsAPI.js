@@ -24,7 +24,7 @@ export function updateProfileEtudiant(user, formData,navigate) {
 
       const etudiantData = {
         id: user.id,
-        accountType : user.accountType,
+        accountType : user?.accountType,
         nom: formData.nom,
         prenom: formData.prenom,
         telephone: formData.telephone,
@@ -74,7 +74,7 @@ export function updateProfileAdmin(user, formData,navigate) {
 
       const etudiantData = {
         id: user.id,
-        accountType : user.accountType,
+        accountType : user?.accountType,
         nom: formData.nom,
         prenom: formData.prenom,
         telephone: formData.telephone,
@@ -121,7 +121,7 @@ export function updateProfileEnseignant(user, formData,navigate) {
     
       const EnseignantData = {
         id: user.id,
-        accountType : user.accountType,
+        accountType : user?.accountType,
         nom: formData.nom,
         prenom: formData.prenom,
         telephone: formData.telephone,

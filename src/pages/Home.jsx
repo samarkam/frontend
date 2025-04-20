@@ -216,7 +216,7 @@ const Home = () => {
                     </div>
 
                     {/* course slider */}
-                    <div className='mx-auto box-content w-full max-w-maxContentTab px- py-12 lg:max-w-maxContent'>
+                    {/* <div className='mx-auto box-content w-full max-w-maxContentTab px- py-12 lg:max-w-maxContent'>
                         <h2 className='text-white mb-6 text-2xl '>
                             Popular Picks for You 🏆
                         </h2>
@@ -227,14 +227,14 @@ const Home = () => {
                             Top Enrollments Today 🔥
                         </h2>
                         <Course_Slider Courses={CatalogPageData?.mostSellingCourses} />
-                    </div>
+                    </div> */}
 
 
                     <ExploreMore />
                 </div>
 
                 {/*Section 2  */}
-                <div className='bg-pure-greys-5 text-richblack-700 '>
+                <div className='bg-richblack-800 text-richblack-700 '>
                     <div className='homepage_bg h-[310px]'>
                         <div className='w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-5 mx-auto'>
                             <div className='h-[150px]'></div>
@@ -254,14 +254,14 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className='mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7'>
+                    <div className='mx-auto w-11/12 max-w-maxContent  flex flex-col items-center justify-between gap-7'>
                         <div className='flex flex-col lg:flex-row gap-5 mb-10 mt-[95px]'>
-                            <div className='text-3xl lg:text-4xl font-semibold w-full lg:w-[45%]'>
+                            <div className='text-3xl lg:text-4xl font-semibold text-white w-full lg:w-[45%]'>
                                 Get the Skills you need for a
                                 <HighlightText text={"Job that is in demand"} />
                             </div>
 
-                            <div className='flex flex-col gap-10 w-full lg:w-[40%] items-start'>
+                            <div className='flex flex-col gap-10 w-full lg:w-[40%] items-start text-white'>
                                 <div className='text-[16px]'>
                                     The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
                                 </div>

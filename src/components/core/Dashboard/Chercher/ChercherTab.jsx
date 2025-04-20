@@ -157,7 +157,7 @@ export default function ChercherTab({ courses, setCourses, loading, setLoading }
                 className="mt-2 w-full rounded-md border border-richblack-600 bg-richblack-700 p-2 text-sm text-richblack-5"
               />
             </Th>
-            {user.accountType === ACCOUNT_TYPE.ADMIN ? (
+            {user?.accountType === ACCOUNT_TYPE.ADMIN ? (
               <Th className="w-[9%] text-left text-sm font-semibold uppercase text-richblack-100 py-2">
                 Actions
                 <select
@@ -214,7 +214,7 @@ export default function ChercherTab({ courses, setCourses, loading, setLoading }
                 <Td className="w-[15%] text-sm font-medium text-richblack-100">
                   {course.enseignant.prenom} {course.enseignant.nom}
                 </Td>
-                {user.accountType === ACCOUNT_TYPE.ADMIN ? (
+                {user?.accountType === ACCOUNT_TYPE.ADMIN ? (
                   <Td className="w-[9%] text-sm font-medium text-richblack-100">
                     <p
                       className={`flex w-fit flex-row items-center rounded-full bg-richblack-700 px-1 py-[1px] text-[12px] font-medium ${
