@@ -36,7 +36,7 @@ export default function PublishCourse() {
       return;
     }
 
-    const result = await toggleCoursePublished(course.id, data.isPublished, token);
+    const result = await toggleCoursePublished(course.id, data.isPublished, navigate);
     if (result) {
       dispatch(setCourse(result));
       goToCourses();

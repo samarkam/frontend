@@ -128,7 +128,17 @@ export function login(email, password, navigate) {
 
       localStorage.setItem("user", JSON.stringify(etudiantData));
 
-      navigate("/dashboard/my-profile");
+    if(user?.accountType === ACCOUNT_TYPE.STUDENT){
+      navigate("/dashboard/enrolled-courses" );
+
+    }else if (user?.accountType === ACCOUNT_TYPE.INSTRUCTOR){
+      navigate("/dashboard/instructor" );
+
+
+    }else if (user?.accountType === ACCOUNT_TYPE.ADMIN){
+      navigate("/dashboard/admin");
+
+    }
     } catch (error) {
      // console.log("LOGIN API ERROR.......", error)
       toast.error(error.response?.data?.message)

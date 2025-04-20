@@ -5,6 +5,8 @@ import { updateCompletedLectures } from "../../slices/viewCourseSlice"
 import { apiConnector } from "../apiConnector"
 import { courseEndpoints } from "../apis"
 import { ACCOUNT_TYPE } from "../../utils/constants"
+import { useNavigate } from "react-router-dom"
+
 
 const {
   COURSE_DETAILS_API,
@@ -30,18 +32,20 @@ const {
   LECTURE_COMPLETION_API,
 } = courseEndpoints
 
-export const toggleCoursePublished = async (courseId, isPublished, token) => {
+
+
+export const toggleCoursePublished = async (courseId, isPublished, navigate) => {
+
   try {
     const response = await fetch(
       `http://localhost:9090/api/cours/${courseId}/toggle-published?isPublished=${isPublished}`,
       {
         method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+       
       }
     );
     if (!response.ok) throw new Error("Failed to toggle published status");
+      navigate("/dashboard/my-courses");
     return await response.json();
   } catch (error) {
     console.error(error);

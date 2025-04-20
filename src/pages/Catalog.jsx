@@ -22,32 +22,15 @@ function Catalog() {
     const [categoryId, setCategoryId] = useState("")
     const [loading, setLoading] = useState(false);
 
-    // Fetch All Categories
-    useEffect(() => {
-        ; (async () => {
-            try {
-                const res = await fetchCourseCategories();
 
-               // console.log(res.filter(
-                    (ct) => ct.id === Number(catalogId)
-                )[0])
-                const categoryid = res.filter(
-                    (ct) => ct.id === Number(catalogId)
-                )[0].id
-                setCategoryId(categoryid)
-            } catch (error) {
-               // console.log("Could not fetch Categories.", error)
-            }
-        })()
-    }, [Number(catalogId)])
 
 
     useEffect(() => {
-        if (categoryId) {
+        if (catalogId) {
             ; (async () => {
                 setLoading(true)
                 try {
-                    const res = await getCatalogPageData(categoryId)
+                    const res = await getCatalogPageData(catalogId)
                    // console.log("tttttttttt")
                    // console.log(res)
                     setCatalogPageData(res)
@@ -57,10 +40,10 @@ function Catalog() {
                 setLoading(false)
             })()
         }
-    }, [categoryId])
+    }, [catalogId])
 
-    //// console.log('======================================= ', catalogPageData)
-    //// console.log('categoryId ==================================== ', categoryId)
+     console.log('======================================= ', catalogPageData)
+   console.log('categoryId ==================================== ', categoryId)
 
     if (loading) {
         return (

@@ -3,16 +3,18 @@ import { ACCOUNT_TYPE } from './../src/utils/constants';
 export const sidebarLinks = [
   {
     id: 1,
-    name: "My Profile",
-    path: "/dashboard/my-profile",
-    icon: "VscAccount",
-  },
-  {
-    id: 2,
     name: "Dashboard",
     path: "/dashboard/instructor",
     type: ACCOUNT_TYPE.INSTRUCTOR,
     icon: "VscDashboard",
+  },
+  {
+    id: 2,
+   
+    name: "Enrolled Courses",
+    path: "/dashboard/enrolled-courses",
+    type: ACCOUNT_TYPE.STUDENT,
+    icon: "VscMortarBoard",
   },
   {
     id: 3,
@@ -30,24 +32,26 @@ export const sidebarLinks = [
   },
   {
     id: 5,
-    name: "Enrolled Courses",
-    path: "/dashboard/enrolled-courses",
-    type: ACCOUNT_TYPE.STUDENT,
-    icon: "VscMortarBoard",
-  },
-  {
-    id: 6,
-    name: "Purchase History",
-    path: "/dashboard/purchase-history",
-    type: ACCOUNT_TYPE.STUDENT,
-    icon: "VscHistory",
-  },
-  {
-    id: 7,
+   
     name: "Dashboard",
     path: "/dashboard/admin",
     type: ACCOUNT_TYPE.ADMIN,
     icon: "VscDashboard",
+
+  },
+  // {
+  //   id: 6,
+  //   name: "Purchase History",
+  //   path: "/dashboard/purchase-history",
+  //   type: ACCOUNT_TYPE.STUDENT,
+  //   icon: "VscHistory",
+  // },
+  {
+    id: 7,
+   
+    name: "My Profile",
+    path: "/dashboard/my-profile",
+    icon: "VscAccount",
   },
   {
     id: 8,

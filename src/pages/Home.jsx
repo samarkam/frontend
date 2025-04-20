@@ -10,7 +10,7 @@ import LearningLanguageSection from '../components/core/HomePage/LearningLanguag
 import InstructorSection from '../components/core/HomePage/InstructorSection'
 import Footer from '../components/common/Footer'
 import ExploreMore from '../components/core/HomePage/ExploreMore'
-import ReviewSlider from '../components/common/ReviewSlider'
+// import ReviewSlider from '../components/common/ReviewSlider'
 import Course_Slider from '../components/core/Catalog/Course_Slider'
 
 import { getCatalogPageData } from '../services/operations/pageAndComponentData'
@@ -288,11 +288,10 @@ const Home = () => {
                 <div className='mt-14 w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 first-letter bg-richblack-900 text-white'>
                     <InstructorSection />
 
-                    {/* Reviws from Other Learner */}
-                    <h1 className="text-center text-3xl lg:text-4xl font-semibold mt-8 flex justify-center items-center gap-x-3">
+                    {/* <h1 className="text-center text-3xl lg:text-4xl font-semibold mt-8 flex justify-center items-center gap-x-3">
                         Reviews from other learners <MdOutlineRateReview className='text-yellow-25' />
                     </h1>
-                    <ReviewSlider />
+                    <ReviewSlider /> */}
                 </div>
 
                 {/*Footer */}

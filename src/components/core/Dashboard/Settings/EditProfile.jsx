@@ -144,7 +144,9 @@ export default function EditProfile() {
                 </span>
               )}
             </div>
-          <div className="flex flex-col gap-2 w-1/2">
+          { user?.niveauEtude ? 
+            
+            <div className="flex flex-col gap-2 w-1/2">
             <label htmlFor="niveauEtude" className="lable-style">
               niveau Etude
               </label>
@@ -162,7 +164,7 @@ export default function EditProfile() {
                   Please enter your Grade.
                 </span>
               )}
-            </div>
+            </div> : <div></div>}
 
             </div>
             <div className="flex flex-col gap-5 lg:flex-row">

@@ -25,10 +25,10 @@ export const studentEndpoints = {
 
 // COURSE ENDPOINTS
 export const courseEndpoints = {
-  GET_ALL_COURSE_API: "/cours/list/light",
+  GET_ALL_COURSE_API: BASE_URL + "/cours/list/light",
   COURSE_DETAILS_API: BASE_URL + "/course/getCourseDetails",
   EDIT_COURSE_API: BASE_URL + "/course/editCourse",
-  COURSE_CATEGORIES_API: BASE_URL +"/dicipline",
+  COURSE_CATEGORIES_API: BASE_URL + "/specialite",
   CREATE_COURSE_API: BASE_URL + "/course/createCourse",
   CREATE_SECTION_API: BASE_URL + "/course/addSection",
   CREATE_SUBSECTION_API: BASE_URL + "/course/addSubSection",
@@ -54,12 +54,12 @@ export const ratingsEndpoints = {
 
 // CATAGORIES API
 export const categories = {
-  CATEGORIES_API: "/specialite",
+  CATEGORIES_API: BASE_URL + "/specialite",
 }
 
 // CATALOG PAGE DATA
 export const catalogData = {
-  CATALOGPAGEDATA_API: "/specialite",
+  CATALOGPAGEDATA_API: BASE_URL + "/specialite",
 }
 // CONTACT-US API
 export const contactusEndpoint = {
@@ -75,5 +75,5 @@ export const contactusEndpoint = {
 // }
 
 export const etudiantAPI = {
-  UPDATE_PROFILE_API: "/etudiant/update",
+  UPDATE_PROFILE_API: BASE_URL + "/etudiant/update",
 }

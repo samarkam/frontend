@@ -122,7 +122,7 @@ const Navbar = () => {
                                                                     className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
                                                                     key={i}
                                                                 >
-                                                                    <p>{subLink.titre}</p>
+                                                                    <p>{subLink.labelle}</p>
                                                                 </Link>
                                                                 ))}
                                                         </>

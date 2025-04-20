@@ -1,6 +1,7 @@
 // This will prevent authenticated users from accessing this route
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
+import { ACCOUNT_TYPE } from "../../../utils/constants";
 
 function OpenRoute({ children }) {
   const { user } =  useSelector((state) => state.profile);
@@ -11,7 +12,24 @@ function OpenRoute({ children }) {
   }else   if (user === null) {
     return children
   } else {
-    return <Navigate to="/dashboard/my-profile" />
+
+    if(user?.accountType === ACCOUNT_TYPE.STUDENT){
+          return <Navigate to="/dashboard/enrolled-courses" />
+
+    }else if (user?.accountType === ACCOUNT_TYPE.INSTRUCTOR){
+      return <Navigate to="/dashboard/instructor" />
+
+
+    }else if (user?.accountType === ACCOUNT_TYPE.ADMIN){
+      return <Navigate to="/dashboard/admin" />
+
+    }
+
+
+
+
+
+
   }
 }
 

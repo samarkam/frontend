@@ -12,7 +12,7 @@ import Quote from "../components/core/AboutPage/Quote"
 import StatsComponenet from "../components/core/AboutPage/Stats"
 import HighlightText from "../components/core/HomePage/HighlightText"
 import Img from "../components/common/Img"
-import ReviewSlider from './../components/common/ReviewSlider';
+// import ReviewSlider from './../components/common/ReviewSlider';
 
 import { motion } from 'framer-motion';
 import { fadeIn } from "../components/common/motionFrameVarients"
@@ -147,12 +147,12 @@ const About = () => {
       </section>
 
       {/* Reviws from Other Learner */}
-      <div className=" my-20 px-5 text-white ">
+      {/* <div className=" my-20 px-5 text-white ">
         <h1 className="text-center text-4xl font-semibold mt-8">
           Reviews from other learners
         </h1>
-        <ReviewSlider />
-      </div>
+        <ReviewSlider /> 
+      </div> */}
 
       {/* footer */}
       <Footer />
