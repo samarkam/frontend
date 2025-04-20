@@ -2,6 +2,7 @@ const BASE_URL = "http://localhost:9090/api";
 
 // AUTH ENDPOINTS
 export const endpoints = {
+  QUIZ_API: BASE_URL+ "/cours/quiz",
   SENDOTP_API:  BASE_URL +"/auth",
   SIGNUP_API:  BASE_URL +"/etudiant/new",
   LOGIN_API:  BASE_URL +"/auth",

@@ -106,7 +106,7 @@ export default function CoursesTable({ courses, setCourses, loading, setLoading 
                   key={course.id}
                   className="flex gap-x-10 border-b border-richblack-800 px-6 py-8"
                 >
-                  <Td className="flex flex-1 gap-x-4 relative">
+                  <Td className="flex flex-1 gap-x-4 relative" onClick={() =>navigate(`/courses/view/${course.id}`)}>
                     {/* course Thumbnail */}
                     <Img
                       src={course?.image}

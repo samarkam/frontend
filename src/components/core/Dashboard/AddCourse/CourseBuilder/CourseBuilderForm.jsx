@@ -13,7 +13,6 @@ import IconBtn from "../../../../common/IconBtn";
 import NestedView from "./NestedView";
 
 export default function CourseBuilderForm() {
-
   const {
     register,
     handleSubmit,
@@ -40,12 +39,8 @@ export default function CourseBuilderForm() {
     };
 
     if (editChapterId) {
-      // Update existing chapter
-      result = await updateSection(
-        { id: editChapterId, ...chapterData }
-      );
+      result = await updateSection({ id: editChapterId, ...chapterData });
     } else {
-      // Create new chapter
       result = await createSection(chapterData);
     }
 
@@ -60,16 +55,12 @@ export default function CourseBuilderForm() {
     setLoading(false);
   };
 
-
-
   useEffect(() => {
     if (!editChapterId) {
       setValue("maxScore", 100);
-      setValue("ordre", (course?.chapitres?.length  ? course?.chapitres?.length  : 0) + 1);
+      setValue("ordre", (course?.chapitres?.length ? course?.chapitres?.length : 0) + 1);
     }
   }, [editChapterId, course?.chapitres?.length, setValue]);
-
-
 
   // Cancel editing a chapter
   const cancelEdit = () => {
@@ -99,8 +90,14 @@ export default function CourseBuilderForm() {
       toast.error("Please add at least one chapter");
       return;
     }
-    if (course?.chapitres.some((chapter) => chapter.resourceList?.length === 0)) {
-      toast.error("Please add at least one resource in each chapter");
+    if (
+      course?.chapitres.some(
+        (chapter) =>
+          (!chapter.resourceList || chapter.resourceList.length === 0) &&
+          (!chapter.quizList || chapter.quizList.length === 0)
+      )
+    ) {
+      toast.error("Please add at least one resource or quiz in each chapter");
       return;
     }
     dispatch(setStep(3));
@@ -156,57 +153,56 @@ export default function CourseBuilderForm() {
         </div>
 
         <div className="flex gap-4">
-  {/* Max Score */}
-  <div className="flex flex-col w-1/2 space-y-2">
-    <label className="text-sm text-richblack-5" htmlFor="maxScore">
-      Max Score <sup className="text-pink-200">*</sup>
-    </label>
-    <input
-      id="maxScore"
-      type="number"
-      placeholder="Enter Max Score"
-      disabled
-      value={editChapterId ? undefined : 100}
-      {...register("maxScore", {
-        required: true,
-        valueAsNumber: true,
-        min: { value: 1, message: "Max score must be at least 1" },
-      })}
-      className={`form-style w-full ${!editChapterId ? "bg-richblack-700 text-richblack-300" : ""}`}
-    />
-    {errors.maxScore && (
-      <span className="ml-2 text-xs tracking-wide text-pink-200">
-        {errors.maxScore.message || "Max score is required"}
-      </span>
-    )}
-  </div>
+          {/* Max Score */}
+          <div className="flex flex-col w-1/2 space-y-2">
+            <label className="text-sm text-richblack-5" htmlFor="maxScore">
+              Max Score <sup className="text-pink-200">*</sup>
+            </label>
+            <input
+              id="maxScore"
+              type="number"
+              placeholder="Enter Max Score"
+              disabled
+              value={editChapterId ? undefined : 100}
+              {...register("maxScore", {
+                required: true,
+                valueAsNumber: true,
+                min: { value: 1, message: "Max score must be at least 1" },
+              })}
+              className={`form-style w-full ${!editChapterId ? "bg-richblack-700 text-richblack-300" : ""}`}
+            />
+            {errors.maxScore && (
+              <span className="ml-2 text-xs tracking-wide text-pink-200">
+                {errors.maxScore.message || "Max score is required"}
+              </span>
+            )}
+          </div>
 
-  {/* Order */}
-  <div className="flex flex-col w-1/2 space-y-2">
-    <label className="text-sm text-richblack-5" htmlFor="ordre">
-      Order <sup className="text-pink-200">*</sup>
-    </label>
-    <input
-      id="ordre"
-      type="number"
-      placeholder="Enter Order"
-      disabled
-      value={editChapterId ? undefined : (course?.chapitres?.length  ? course?.chapitres?.length  : 0)  + 1}
-      {...register("ordre", {
-        required: true,
-        valueAsNumber: true,
-        min: { value: 1, message: "Order must be at least 1" },
-      })}
-      className={`form-style w-full ${!editChapterId ? "bg-richblack-700 text-richblack-300" : ""}`}
-    />
-    {errors.ordre && (
-      <span className="ml-2 text-xs tracking-wide text-pink-200">
-        {errors.ordre.message || "Order is required"}
-      </span>
-    )}
-  </div>
-</div>
-
+          {/* Order */}
+          <div className="flex flex-col w-1/2 space-y-2">
+            <label className="text-sm text-richblack-5" htmlFor="ordre">
+              Order <sup className="text-pink-200">*</sup>
+            </label>
+            <input
+              id="ordre"
+              type="number"
+              placeholder="Enter Order"
+              disabled
+              value={editChapterId ? undefined : (course?.chapitres?.length ? course?.chapitres?.length : 0) + 1}
+              {...register("ordre", {
+                required: true,
+                valueAsNumber: true,
+                min: { value: 1, message: "Order must be at least 1" },
+              })}
+              className={`form-style w-full ${!editChapterId ? "bg-richblack-700 text-richblack-300" : ""}`}
+            />
+            {errors.ordre && (
+              <span className="ml-2 text-xs tracking-wide text-pink-200">
+                {errors.ordre.message || "Order is required"}
+              </span>
+            )}
+          </div>
+        </div>
 
         {/* Create/Update Chapter Button */}
         <div className="flex items-end gap-x-4">

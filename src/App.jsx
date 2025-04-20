@@ -12,6 +12,9 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import PageNotFound from "./pages/PageNotFound";
 import CourseDetails from './pages/CourseDetails';
+
+import ViewCourseDetails from "./pages/ViewCourseDetails";
+
 import Catalog from './pages/Catalog';
  
 import Navbar from "./components/common/Navbar"
@@ -93,6 +96,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="catalog/:catalogId" element={<Catalog />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
+        <Route path="courses/view/:courseId" element={<ViewCourseDetails />} />
 
         {/* Open Route - for Only Non Logged in User */}
         <Route
