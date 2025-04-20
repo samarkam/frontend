@@ -4,6 +4,7 @@ import { updateCompletedLectures } from "../../slices/viewCourseSlice"
 // import { setLoading } from "../../slices/profileSlice";
 import { apiConnector } from "../apiConnector"
 import { courseEndpoints } from "../apis"
+import { ACCOUNT_TYPE } from "../../utils/constants"
 
 const {
   COURSE_DETAILS_API,
@@ -18,6 +19,11 @@ const {
   DELETE_SECTION_API,
   DELETE_SUBSECTION_API,
   GET_ALL_INSTRUCTOR_COURSES_API,
+
+  GET_ALL_COURSES_API,
+  GET_ALL_STU_API,
+  GET_ALL_ENS_API,
+
   DELETE_COURSE_API,
   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
   CREATE_RATING_API,
@@ -303,13 +309,9 @@ export const fetchInstructorCourses = async (token) => {
     const response = await apiConnector(
       "GET",
       GET_ALL_INSTRUCTOR_COURSES_API,
-      null,
-      {
-        Authorization: `Bearer ${token}`,
-      }
     )
     console.log("INSTRUCTOR COURSES API RESPONSE", response)
-    if (!response?.data?.success) {
+    if (!response?.data) {
       throw new Error("Could Not Fetch Instructor Courses")
     }
     result = response?.data?.data
@@ -319,6 +321,66 @@ export const fetchInstructorCourses = async (token) => {
   }
   return result
 }
+
+export const fetchCourses = async (token) => {
+  let result = []
+  // const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector(
+      "GET",
+      GET_ALL_COURSES_API,
+    )
+    console.log("COURSES API RESPONSE", response)
+    if (!response?.data) {
+      throw new Error("Could Not Fetch Instructor Courses")
+    }
+    result = response?.data
+  } catch (error) {
+    console.log("COURSES API ERROR............", error)
+    toast.error(error.message)
+  }
+  return result
+}
+
+
+export const fetchUsers = async (token) => {
+  let result = [];
+  try {
+    const etudiants = await apiConnector("GET", GET_ALL_STU_API);
+    console.log("COURSES API etudiants", etudiants);
+    if (!etudiants?.data) {
+      throw new Error("Could Not Fetch Students");
+    }
+    // Add accountType to each student
+    const studentsWithType = etudiants.data.map((student) => ({
+      ...student,
+      accountType: ACCOUNT_TYPE.STUDENT,
+    }));
+    result = [...studentsWithType];
+  } catch (error) {
+    console.log("STUDENTS API ERROR............", error);
+    toast.error(error.message);
+  }
+
+  try {
+    const teachers = await apiConnector("GET", GET_ALL_ENS_API);
+    console.log("COURSES API teachers", teachers);
+    if (!teachers?.data) {
+      throw new Error("Could Not Fetch Teachers");
+    }
+    // Add accountType to each teacher
+    const teachersWithType = teachers.data.map((teacher) => ({
+      ...teacher,
+      accountType: ACCOUNT_TYPE.INSTRUCTOR,
+    }));
+    result = [...result, ...teachersWithType];
+  } catch (error) {
+    console.log("TEACHERS API ERROR............", error);
+    toast.error(error.message);
+  }
+
+  return result;
+};
 
 
 // ================ delete Course ================
@@ -340,6 +402,57 @@ export const deleteCourse = async (data, token) => {
   // toast.dismiss(toastId)
 }
 
+export const deleteUser = async (data, token) => {
+  // const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("DELETE", "", data, {
+      Authorization: `Bearer ${token}`,
+    })
+    console.log("DELETE User API RESPONSE............", response)
+    if (!response?.data?.success) {
+      throw new Error("Could Not Delete User")
+    }
+    toast.success("User Deleted")
+  } catch (error) {
+    console.log("DELETE User API ERROR............", error)
+    toast.error(error.message)
+  }
+  // toast.dismiss(toastId)
+}
+
+export const blockCourse = async (data) => {
+  // const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("PUT", `http://localhost:9090/api/cours/${data.courseId}/toggle-active?isActive=${!data.blocked}`)
+    console.log("Block COURSE API RESPONSE............", response)
+    if (!response?.data) {
+      throw new Error("Could Not Block Course")
+    }
+    const blockStatus = data.blocked ? 'Blocked' : 'Active';
+    toast.success("Course "+blockStatus)
+  } catch (error) {
+    console.log("Block COURSE API ERROR............", error)
+    toast.error(error.message)
+  }
+  // toast.dismiss(toastId)
+}
+
+export const blockUser = async (data) => {
+  // const toastId = toast.loading("Loading...")/5/block?isBlocked=true'
+  try {
+    const response = await apiConnector("PUT", `http://localhost:9090/api/users/${data.id}/block?isBlocked=${!data.blocked}`)
+    console.log("Block USER API RESPONSE............", response)
+    if (!response?.data) {
+      throw new Error("Could Not Block User")
+    }
+    const blockStatus = !data.blocked ? 'Blocked' : 'Active';
+    toast.success("User "+blockStatus)
+  } catch (error) {
+    console.log("Block User API ERROR............", error)
+    toast.error(error.message)
+  }
+  // toast.dismiss(toastId)
+}
 
 // ================ get Full Details Of Course ================
 export const getFullDetailsOfCourse = async (courseId, token) => {

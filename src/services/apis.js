@@ -1,10 +1,10 @@
-const BASE_URL = "";
+const BASE_URL = "http://localhost:9090/api";
 
 // AUTH ENDPOINTS
 export const endpoints = {
-  SENDOTP_API:  "http://localhost:9090/api/auth",
-  SIGNUP_API:  "http://localhost:9090/api/auth",
-  LOGIN_API:  "http://localhost:9090/api/auth",
+  SENDOTP_API:  BASE_URL +"/auth",
+  SIGNUP_API:  BASE_URL +"/etudiant/new",
+  LOGIN_API:  BASE_URL +"/auth",
   RESETPASSTOKEN_API: BASE_URL + "/auth/reset-password-token",
   RESETPASSWORD_API: BASE_URL + "/auth/reset-password",
 }
@@ -25,22 +25,26 @@ export const studentEndpoints = {
 
 // COURSE ENDPOINTS
 export const courseEndpoints = {
-  GET_ALL_COURSE_API: "http://localhost:9090/api/cours/list/light",
+  GET_ALL_COURSE_API: "/cours/list/light",
   COURSE_DETAILS_API: BASE_URL + "/course/getCourseDetails",
   EDIT_COURSE_API: BASE_URL + "/course/editCourse",
-  COURSE_CATEGORIES_API: "http://localhost:9090/api/specialite",
+  COURSE_CATEGORIES_API: BASE_URL +"/dicipline",
   CREATE_COURSE_API: BASE_URL + "/course/createCourse",
   CREATE_SECTION_API: BASE_URL + "/course/addSection",
   CREATE_SUBSECTION_API: BASE_URL + "/course/addSubSection",
   UPDATE_SECTION_API: BASE_URL + "/course/updateSection",
   UPDATE_SUBSECTION_API: BASE_URL + "/course/updateSubSection",
   GET_ALL_INSTRUCTOR_COURSES_API: BASE_URL + "/course/getInstructorCourses",
+  GET_ALL_COURSES_API: BASE_URL + "/cours/list",
   DELETE_SECTION_API: BASE_URL + "/course/deleteSection",
   DELETE_SUBSECTION_API: BASE_URL + "/course/deleteSubSection",
   DELETE_COURSE_API: BASE_URL + "/course/deleteCourse",
   GET_FULL_COURSE_DETAILS_AUTHENTICATED: BASE_URL + "/course/getFullCourseDetails",
   LECTURE_COMPLETION_API: BASE_URL + "/course/updateCourseProgress",
   CREATE_RATING_API: BASE_URL + "/course/createRating",
+
+  GET_ALL_STU_API : BASE_URL +"/etudiant/list",
+  GET_ALL_ENS_API : BASE_URL +"/enseignant/list",
 }
 
 // RATINGS AND REVIEWS
@@ -50,12 +54,12 @@ export const ratingsEndpoints = {
 
 // CATAGORIES API
 export const categories = {
-  CATEGORIES_API: "http://localhost:9090/api/specialite",
+  CATEGORIES_API: "/specialite",
 }
 
 // CATALOG PAGE DATA
 export const catalogData = {
-  CATALOGPAGEDATA_API: "http://localhost:9090/api/specialite",
+  CATALOGPAGEDATA_API: "/specialite",
 }
 // CONTACT-US API
 export const contactusEndpoint = {
@@ -71,5 +75,5 @@ export const contactusEndpoint = {
 // }
 
 export const etudiantAPI = {
-  UPDATE_PROFILE_API: "http://localhost:9090/api/etudiant/update",
+  UPDATE_PROFILE_API: "/etudiant/update",
 }

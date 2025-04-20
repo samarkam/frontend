@@ -37,7 +37,10 @@ import VideoDetails from './components/core/ViewCourse/VideoDetails';
 import { ACCOUNT_TYPE } from './utils/constants';
 
 import { HiArrowNarrowUp } from "react-icons/hi"
-
+import Courses from "./components/core/Dashboard/AdminCourses";
+import AdminUsers from "./components/core/Dashboard/AdminUsers";
+import Chercher from "./components/core/Dashboard/Chercher";
+import Admin from "./components/core/Dashboard/Admin";
 
 function App() {
 
@@ -138,6 +141,7 @@ function App() {
           </ProtectedRoute>
         }
         >
+          <Route path="/dashboard/chercher" element={<Chercher />} />
           <Route path="dashboard/my-profile" element={<MyProfile />} />
           <Route path="dashboard/Settings" element={<Settings />} />
 
@@ -152,12 +156,23 @@ function App() {
 
           {/* Route only for Instructors */}
           {/* add course , MyCourses, EditCourse*/}
+          {console.log("------------------------>"+user?.accountType)}
           {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
             <>
               <Route path="dashboard/instructor" element={<Instructor />} />
               <Route path="dashboard/add-course" element={<AddCourse />} />
               <Route path="dashboard/my-courses" element={<MyCourses />} />
               <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
+            </>
+          )}
+
+          {/* Route only for Admins */}
+          {/* Courses, Users*/}
+          {user?.accountType === ACCOUNT_TYPE.ADMIN && (
+            <>
+              <Route path="dashboard/admin" element={<Admin />} />
+              <Route path="dashboard/courses" element={<Courses />} />
+              <Route path="dashboard/users" element={<AdminUsers />} />
             </>
           )}
         </Route>
