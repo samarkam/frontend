@@ -8,12 +8,13 @@ import { useState } from "react"
 import { FaCheck } from "react-icons/fa"
 import { FiEdit2 } from "react-icons/fi"
 import { HiClock } from "react-icons/hi"
+import { MdBlock } from "react-icons/md";
 import { RiDeleteBin6Line, RiForbidLine } from "react-icons/ri"
 import { useNavigate } from "react-router-dom"
 
 import { formatDate } from "../../../../services/formatDate"
 import { deleteCourse , fetchCourses,blockCourse} from "../../../../services/operations/courseDetailsAPI"
-import { COURSE_STATUS } from "../../../../utils/constants"
+import { ACCOUNT_TYPE, COURSE_STATUS } from "../../../../utils/constants"
 import ConfirmationModal from "../../../common/ConfirmationModal"
 import Img from './../../../common/Img';
 import toast from 'react-hot-toast'
@@ -23,12 +24,15 @@ import toast from 'react-hot-toast'
 
 
 export default function ACoursesTable({ courses, setCourses, loading, setLoading }) {
-
+    const { user } = useSelector((state) => state.profile)
   const navigate = useNavigate()
   const { token } = useSelector((state) => state.auth)
 
   const [confirmationModal, setConfirmationModal] = useState(null)
   const TRUNCATE_LENGTH = 25
+
+  const [classN,setClassN] = useState(null)
+
 
   // delete course
   const handleCourseDelete = async (courseId) => {
@@ -124,7 +128,7 @@ export default function ACoursesTable({ courses, setCourses, loading, setLoading
                   key={course.id}
                   className="flex gap-x-10 border-b border-richblack-800 px-6 py-8"
                 >
-                  <Td className="flex flex-1 gap-x-4 relative">
+                  <Td className="flex flex-1 gap-x-4 relative" onClick={() =>navigate(`/courses/view/${course.id}`)}>
                     {/* course Thumbnail */}
                     <Img
                       src={course?.image}
@@ -143,18 +147,7 @@ export default function ACoursesTable({ courses, setCourses, loading, setLoading
                             .join(" ") + "..."
                           : course.description}
                       </p>
-
-                      {/* created At 
-                      <p className="text-[12px] text-richblack-100 mt-4">
-                        Created: {formatDate(course?.createdAt)}
-                      </p>
-                      */}
-                      {/* updated At 
-                      <p className="text-[12px] text-richblack-100 ">
-                        updated: {formatDate(course?.updatedAt)}
-                      </p>
-                      */}
-                      {/* course status */}
+                     {/* course status */}
                       {course.published === false ? (
                         <p className="mt-2 flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
                           <HiClock size={14} />
@@ -168,20 +161,6 @@ export default function ACoursesTable({ courses, setCourses, loading, setLoading
                           Published
                         </div>
                         )}
-                      {/* course activitie */}
-                      {course.active === false ? (
-                        <p className="mt-2 flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
-                          <HiClock size={14} />
-                          Blocked
-                        </p>)
-                        :
-                        (<div className="mt-2 flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
-                          <p className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
-                            <FaCheck size={8} />
-                          </p>
-                          Avtive
-                        </div>
-                        )}
                     </div>
                   </Td>
 
@@ -189,70 +168,33 @@ export default function ACoursesTable({ courses, setCourses, loading, setLoading
                   <Td className="text-sm font-medium text-richblack-100">2hr 30min</Td>
                   <Td className="text-sm font-medium text-richblack-100">₹{course.price}</Td>
                   */}
-                  <Td className="text-sm font-medium text-richblack-100 ">
-                    {/* Edit button */}
-                    <button
-                      disabled={loading}
-                      onClick={() => {{ course.active ? 
-                        setConfirmationModal({ 
-                          text1: "Do you want to block this course?",
-                          text2:
-                            "No one can access the data related to this course",
-                          btn1Text: !loading ? "Block" : "Loading...  ",
-                          btn2Text: "Cancel",
-                          btn1Handler: !loading
-                            ? () => handleCourseBlock(course.id,course.active)
-                            : () => { },
-                          btn2Handler: !loading
-                            ? () => setConfirmationModal(null)
-                            : () => { },
-
-                        }) : 
-                        setConfirmationModal({ 
-                          text1: "Do you want to Activate this course?",
-                          text2:
-                            "Everyone will be able to access the data related to this course",
-                          btn1Text: !loading ? "Activate" : "Loading...  ",
-                          btn2Text: "Cancel",
-                          btn1Handler: !loading
-                            ? () => handleCourseBlock(course.id,course.active)
-                            : () => { },
-                          btn2Handler: !loading
-                            ? () => setConfirmationModal(null)
-                            : () => { },
-
-                        })
-                      }}}
-                      title={course.active ? 'Block':'Activate'  }
-                      className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300"
+                 <Td className="text-sm font-medium text-richblack-100">
+                    <p
+                      className={`mt-2 flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium ${
+                        course.active ? "text-yellow-100" : "text-pink-100"
+                      }`}
                     >
-                      <RiForbidLine size={20} />
-                    </button>
-
-                    {/* Delete button */}
-                    <button
-                      disabled={loading}
-                      onClick={() => {
-                        setConfirmationModal({
-                          text1: "Do you want to delete this course?",
-                          text2:
-                            "All the data related to this course will be deleted",
-                          btn1Text: !loading ? "Delete" : "Loading...  ",
-                          btn2Text: "Cancel",
-                          btn1Handler: !loading
-                            ? () => handleCourseDelete(course.id)
-                            : () => { },
-                          btn2Handler: !loading
-                            ? () => setConfirmationModal(null)
-                            : () => { },
-
-                        })
-                      }}
-                      title="Delete"
-                      className="px-1 transition-all duration-200 hover:scale-110 hover:text-[#ff0000]"
-                    >
-                      <RiDeleteBin6Line size={20} />
-                    </button>
+                      {course.active ? "Active" : "Blockecd"}
+                      <button
+                        disabled={loading}
+                        onClick={() => {
+                          setConfirmationModal({
+                            text1: course.active ? "Do you want to block this course?" : "Do you want to activate this course?",
+                            text2: course.active
+                              ? "No one can access the data related to this course"
+                              : "Everyone will be able to access the data related to this course",
+                            btn1Text: !loading ? (course.active ? "Block" : "Activate") : "Loading...",
+                            btn2Text: "Cancel",
+                            btn1Handler: !loading ? () => handleCourseBlock(course.id, course.active) : () => {},
+                            btn2Handler: !loading ? () => setConfirmationModal(null) : () => {},
+                          });
+                        }}
+                        title={course.active ? "Block" : "Activate"}
+                        className="transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300"
+                      >
+                        <RiForbidLine size={20} />
+                      </button>
+                    </p>
                   </Td>
                 </Tr>
               ))

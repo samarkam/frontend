@@ -146,23 +146,6 @@ export default function UsersTable({ Users, setUsers, loading, setLoading }) {
                   >
                     <RiForbidLine size={16} />
                   </button>
-                  <button
-                    disabled={loading}
-                    onClick={() =>
-                      setConfirmationModal({
-                        text1: "Do you want to delete this user?",
-                        text2: "All data related to this user will be deleted.",
-                        btn1Text: !loading ? "Delete" : "Loading...",
-                        btn2Text: "Cancel",
-                        btn1Handler: !loading ? () => handleUserDelete(User.id) : () => {},
-                        btn2Handler: !loading ? () => setConfirmationModal(null) : () => {},
-                      })
-                    }
-                    title="Delete"
-                    className="transition-all duration-200 hover:scale-110 hover:text-[#ff0000]"
-                  >
-                    <RiDeleteBin6Line size={16} />
-                  </button>
                 </Td>
               </Tr>
             ))

@@ -12,7 +12,7 @@ import Img from './../../common/Img';
 import { apiConnector } from "../../../services/apiConnector"
 
 
-function CourseDetailsCard({ course, setConfirmationModal }) {
+function ViewCourseDetailsCard({ course, setConfirmationModal }) {
   const user = useSelector((state) => state.profile.user);
 
   // const { userjson } = localStorage.getItem('user') ? JSON.parse( localStorage.getItem('user')) : null
@@ -29,7 +29,7 @@ function CourseDetailsCard({ course, setConfirmationModal }) {
   useEffect(() => {
   
     const fectchCourseDetailsData = async () => {
-      if (user && user.accountType === ACCOUNT_TYPE.STUDENT) {
+      if (user ) {
   
         try {
           const res = await apiConnector(
@@ -130,25 +130,20 @@ function CourseDetailsCard({ course, setConfirmationModal }) {
           <div className="space-x-3 pb-4 text-3xl font-semibold">
           {course?.titre}
           </div>
-
-          <div className="flex flex-col gap-4">
-         {  course.active && course.published && (
-
-         
-          ( user && isEnrolled ?
+          {/* <div className="flex flex-col gap-4">
+         { user && isEnrolled ?
                 <button  className="yellowButton outline-none"
                 onClick={
                     () => navigate("/dashboard/enrolled-courses")
                     }
                   >Go To Course</button>
               
-            : user.accountType == ACCOUNT_TYPE.STUDENT ? 
+            :
               <button onClick={handleBuyCourse} className="blackButton outline-none">
                 Enroll Corse 
               </button>
-            : null
-          ))}
-          </div>
+            }
+          </div> */}
 
       
 
@@ -168,4 +163,4 @@ function CourseDetailsCard({ course, setConfirmationModal }) {
   )
 }
 
-export default CourseDetailsCard
+export default ViewCourseDetailsCard

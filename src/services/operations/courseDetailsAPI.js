@@ -6,7 +6,9 @@ import { apiConnector } from "../apiConnector"
 import { courseEndpoints } from "../apis"
 import { ACCOUNT_TYPE } from "../../utils/constants"
 import { useNavigate } from "react-router-dom"
+import { endpoints } from "../apis";
 
+const { QUIZ_API } = endpoints;
 
 const {
   COURSE_DETAILS_API,
@@ -32,7 +34,67 @@ const {
   LECTURE_COMPLETION_API,
 } = courseEndpoints
 
+export const getQuizById = async (quizId) => {
+  try {
+    const response = await apiConnector("GET", `${QUIZ_API}/${quizId}`)
+    if (!response.data) {
+      throw new Error(response.data.message);
+    }
+    return response.data; // Returns the quiz object
+  } catch (error) {
+    console.error("GET_QUIZ_BY_ID_API ERROR:", error);
+    toast.error(error.response?.data?.message || "Could not fetch quiz");
+    return null;
+  }
+};
 
+export const createQuiz = async (data) => {
+  try {
+    const response = await apiConnector("POST", QUIZ_API + "/new", data)
+    if (!response.data) {
+      throw new Error(response.data.message);
+    }
+    toast.success("Quiz created successfully");
+    return response.data;
+  } catch (error) {
+    console.error("CREATE_QUIZ_API ERROR:", error);
+    toast.error(error.response?.data?.message || "Could not create quiz");
+    return null;
+  }
+};
+
+export const updateQuiz = async (data) => {
+  try {
+    console.log(data)
+    const response = await apiConnector("PUTCH", `${QUIZ_API}/${data.id}`, data)
+    if (!response.data) {
+      throw new Error(response.data.message);
+    }
+    toast.success("Quiz updated successfully");
+    return response.data;
+  } catch (error) {
+    console.error("UPDATE_QUIZ_API ERROR:", error);
+    toast.error(error.response?.data?.message || "Could not update quiz");
+    return null;
+  }
+};
+
+export const deleteQuiz = async (data, token) => {
+  try {
+    const response = await apiConnector("DELETE", `${QUIZ_API}/${data.quizId}`, null, {
+      Authorization: `Bearer ${token}`,
+    });
+    if (!response.data.success) {
+      throw new Error(response.data.message);
+    }
+    toast.success("Quiz deleted successfully");
+    return response.data.data;
+  } catch (error) {
+    console.error("DELETE_QUIZ_API ERROR:", error);
+    toast.error(error.response?.data?.message || "Could not delete quiz");
+    return null;
+  }
+};
 
 export const toggleCoursePublished = async (courseId, isPublished, navigate) => {
   const toastId = toast.loading("Loading...")
@@ -94,6 +156,7 @@ export const fetchCourseDetails = async (courseId) => {
       throw new Error(response.data.message)
     }
     result = response.data
+    console.log(result)
   } catch (error) {
    // console.log("COURSE_DETAILS_API API ERROR............", error)
     result = error.response.data
