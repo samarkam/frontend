@@ -87,6 +87,8 @@ export default function EnrolledCourses() {
           {/* Course Names */}
           {
             enrolledCourses?.map((course, i, arr) => (
+              course.active && course.published &&   (
+              
               <div
                 className={`flex flex-col sm:flex-row sm:items-center border border-richblack-700 ${i === arr.length - 1 ? "rounded-b-2xl" : "rounded-none"}`}
                 key={i}
@@ -144,7 +146,7 @@ export default function EnrolledCourses() {
                   />
                 </div>
               </div>
-            ))
+            )))
           }
         </div>
       }

@@ -110,7 +110,7 @@
 
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { updateProfile } from "../../../../services/operations/SettingsAPI"
+import { updateProfileEtudiant } from "../../../../services/operations/SettingsAPI"
 import Img from "../../../common/Img"
 import { useNavigate } from "react-router-dom"
 
@@ -133,7 +133,7 @@ export default function ChangeProfilePicture() {
     const formData = new FormData()
     formData.append("image", previewSource)
 
-    dispatch(updateProfile(user, formData,navigate))
+    dispatch(updateProfileEtudiant(user, formData,navigate))
   }
 
   return (

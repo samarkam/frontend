@@ -38,7 +38,7 @@ export function sendOtp(email, navigate) {
       toast.success("OTP Sent Successfully");
     } catch (error) {
      // console.log("SENDOTP API ERROR --> ", error);
-      toast.error(error.response.data?.message);
+      //toast.error(error.response.data?.message);
       // toast.error("Could Not Send OTP")
     }
     dispatch(setLoading(false));
@@ -65,7 +65,7 @@ export function signUp(accountType, firstName, lastName, email, password, confir
 
       //// console.log("SIGNUP API RESPONSE --> ", response);
       if (!response.data.success) {
-        toast.error(response.data.message);
+        //toast.error(response.data.message);
         throw new Error(response.data.message);
       }
 
@@ -74,7 +74,7 @@ export function signUp(accountType, firstName, lastName, email, password, confir
     } catch (error) {
      // console.log("SIGNUP API ERROR --> ", error);
       // toast.error(error.response.data.message);
-      toast.error("Invalid OTP");
+      //toast.error("Invalid OTP");
       // navigate("/signup")
     }
     dispatch(setLoading(false))
@@ -96,11 +96,23 @@ export function login(email, password, navigate) {
         password,
       })
 
-     // console.log("LOGIN API RESPONSE............", response.data);
+      // console.log("LOGIN API RESPONSE............", response);
 
-      // if (!response.data.success) {
-      //   throw new Error(response.data.message)
-      // }
+      if (response.status === 200) {
+        const user = response.data;
+
+        // Now fetch the block status
+        const blockCheckResponse = await apiConnector("GET", `http://localhost:9090/api/users/${user.id}`);
+
+        if (blockCheckResponse?.data?.isBlocked) {
+          toast.error("Your account is blocked. Please contact support.");
+          dispatch(setLoading(false));
+          toast.dismiss(toastId);
+          return;
+        }
+
+
+      }
 
       toast.success("Login Successful")
       // dispatch(setToken("whatever"))
@@ -109,7 +121,7 @@ export function login(email, password, navigate) {
       const userImage = user?.image
         ? user.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${user.nom} ${user.prenom}`
-        const etudiantData = {
+        const userData = {
           id: user.id,
           accountType: user.accountType,
           nom: user.nom,
@@ -120,13 +132,16 @@ export function login(email, password, navigate) {
           password:user.password,
           email: user.email,
           details:user.details,
-          niveauEtude: user.niveauEtude
+          niveauEtude: user?.niveauEtude,
+          matricule: user?.matricule,
+          specialite:user?.specialite
+
         }; 
-      dispatch(setUser(etudiantData));
-     // console.log('User data - ',etudiantData);
+      dispatch(setUser(userData));
+     // console.log('User data - ',userData);
     //  localStorage.setItem("token", JSON.stringify("whatever"));
 
-      localStorage.setItem("user", JSON.stringify(etudiantData));
+      localStorage.setItem("user", JSON.stringify(userData));
 
     if(user?.accountType === ACCOUNT_TYPE.STUDENT){
       navigate("/dashboard/enrolled-courses" );
@@ -141,7 +156,7 @@ export function login(email, password, navigate) {
     }
     } catch (error) {
      // console.log("LOGIN API ERROR.......", error)
-      toast.error(error.response?.data?.message)
+      //toast.error
     }
     dispatch(setLoading(false))
     toast.dismiss(toastId)
@@ -173,7 +188,7 @@ export function resetPassword(password, confirmPassword, token, navigate) {
       navigate("/login")
     } catch (error) {
      // console.log("RESETPASSWORD ERROR............", error)
-      toast.error(error.response?.data?.message)
+      //toast.error(error.response?.data?.message)
       // toast.error("Failed To Reset Password");
     }
     toast.dismiss(toastId)

@@ -132,7 +132,10 @@ function CourseDetailsCard({ course, setConfirmationModal }) {
           </div>
 
           <div className="flex flex-col gap-4">
-         { user && isEnrolled ?
+         {  course.active && course.published && (
+
+         
+          ( user && isEnrolled ?
                 <button  className="yellowButton outline-none"
                 onClick={
                     () => navigate("/dashboard/enrolled-courses")
@@ -144,7 +147,7 @@ function CourseDetailsCard({ course, setConfirmationModal }) {
                 Enroll Corse 
               </button>
             : null
-          }
+          ))}
           </div>
 
       

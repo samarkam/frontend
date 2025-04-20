@@ -48,7 +48,9 @@ export default function MyProfile() {
         </IconBtn>
       </div>
 
-      <div className="my-10 flex flex-col gap-y-10 rounded-2xl border-[1px] border-richblack-700 bg-richblack-800 p-8 px-7 sm:px-12">
+      {user?.details &&
+      (
+        <div className="my-10 flex flex-col gap-y-10 rounded-2xl border-[1px] border-richblack-700 bg-richblack-800 p-8 px-7 sm:px-12">
         <div className="flex w-full items-center justify-between">
           <p className="text-lg font-semibold text-richblack-5">About</p>
           <IconBtn
@@ -69,7 +71,7 @@ export default function MyProfile() {
         >
           {user?.details ?? "Write Something About Yourself"}
         </p>
-      </div>
+      </div>)}
 
       <div className="my-10 flex flex-col gap-y-10 rounded-2xl border-[1px] border-richblack-700 bg-richblack-800 p-8 px-7 sm:px-12">
         <div className="flex w-full items-center justify-between">
@@ -107,14 +109,22 @@ export default function MyProfile() {
                 {user?.email}
               </p>
             </div>
-           {  user?.niveauEtude ? 
-            <div>
+           {  user?.niveauEtude  &&
+            (<div>
               <p className="mb-2 text-sm text-richblack-600">Grade</p>
               <p className="text-sm font-semibold text-richblack-5">
-                {user?.niveauEtude ?? "Add Gender"}
+                {user?.niveauEtude ?? "Add Grade"}
+              </p>
+            </div>)
+           }
+            { user?.specialite && (
+              <div>
+              <p className="mb-2 text-sm text-richblack-600">Seciality</p>
+              <p className="text-sm font-semibold text-richblack-5">
+                {user?.specialite ?? "Add Seciality"}
               </p>
             </div>
-            : <div></div>}
+            )}
           </div>
 
           <div className="flex flex-col gap-y-5">
@@ -136,6 +146,14 @@ export default function MyProfile() {
                 {formattedDate(user?.dateDeNaissance) ?? "Add Date Of Birth"}
               </p>
             </div>
+            { user?.matricule && (
+              <div>
+              <p className="mb-2 text-sm text-richblack-600">Registration Number</p>
+              <p className="text-sm font-semibold text-richblack-5">
+                {user?.matricule ?? "Add Registration Number"}
+              </p>
+            </div>
+            )}
           </div>
         </div>
       </div>
