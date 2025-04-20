@@ -33,7 +33,7 @@ export default function Instructor() {
   const totalAmount = 5
    //instructorData?.reduce((acc, curr) => acc + curr.totalAmountGenerated, 0)
 
-  const totalStudents = 6//instructorData?.reduce((acc, curr) => acc + curr.totalStudentsEnrolled, 0)
+  // const totalStudents =instructorData?.reduce((acc, curr) => acc + curr.totalStudentsEnrolled, 0)
 
 
   // skeleton loading
@@ -112,12 +112,12 @@ export default function Instructor() {
                       {courses?.length}
                     </p>
                   </div>
-                  <div>
+                  {/* <div>
                     <p className="text-lg text-richblack-200">Total Students</p>
                     <p className="text-3xl font-semibold text-richblack-50">
                       {totalStudents}
                     </p>
-                  </div>
+                  </div> */}
                   {/* <div>
                     <p className="text-lg text-richblack-200">Total Income</p>
                     <p className="text-3xl font-semibold text-richblack-50">
